@@ -1,0 +1,5 @@
+Pirates have arrived to plunder your booty. What will you do?
+
+Credit
+	@Gizmo: Pirate ruffian sprite
+	@absoluteAquarian, @WaterOre: Pirate lingo proofing

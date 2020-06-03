@@ -1,0 +1,29 @@
+v1
+-	Implement pirate graphics
+-	Implement invasions
+-	Implement hostile NPC
+-	Implement "demands"
+	-	Implement responses
+
+	-	Implement UI
+	-	Define UI
+-	Implement pirate names, chats, and demands
+-	Define pirate npc
+-	Setup project
+
+
+
+
+Plan v1
+-	Pirate lackey appears and demands ransom or invasion happens
+-	Depending on offering:
+	-	If sucks or nil, invasion happens immediately
+	-	If lackluster, a warning is issued, and an invasion occurs on repeat
+	-	If mediocre, all loot is lost, and pirate simply disappears
+	-	If good, all loot is lost, but player gets a secret orb supply dump somewhere
+	-	AM only: If excellent, the pirate envoy is slain, and all of the loot and orbs appear
+-	If a pirate invasion happens
+	-	It happens regardless of pre-hardmode status
+	-	It lasts a whole day, and then the pirates leave
+	-	All surface-dwelling NPCs die, but randomly
+-	AM only: When a secret orb/loot dump occurs, a note is included to mention secret support for cause
