@@ -18,8 +18,8 @@ v1
 			-	If player's offer is >65% pirate's demand, pirate takes it and leaves
 			-	If player's offer is >35% pirate's demand, pirate takes it and leaves irrate
 			-	If player's offer is <=35% pirate's demand, pirate attacks
-	-	Implement UI
 
+	-	Implement UI
 	-	Define UI
 -	Implement pirate graphics
 -	Implement pirate names, chats, and demands
