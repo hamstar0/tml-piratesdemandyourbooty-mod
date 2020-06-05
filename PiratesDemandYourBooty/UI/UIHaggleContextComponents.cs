@@ -3,45 +3,79 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.UI;
 using HamstarHelpers.Helpers.Debug;
+using PiratesDemandYourBooty.NPCs;
 
 
 namespace PiratesDemandYourBooty.UI {
 	class UIHaggleContextComponents : UIState {
-		public UIHagglePanel Panel { get; private set; }
+		public UIHagglePanel HagglePanel { get; private set; }
 
 
 
 		////////////////
 
 		public override void OnInitialize() {
-			this.Panel = new UIHagglePanel();
-			this.UpdatePanelLayout();
-			base.Append( this.Panel );
-		}
-
-
-		////////////////
-
-		public override void Update( GameTime gameTime ) {
-			if( this.Panel.IsOpen ) {
-				this.Recalculate();
-				this.UpdatePanelLayout();
-				this.Recalculate();
-			}
-
-			base.Update( gameTime );
+			this.HagglePanel = new UIHagglePanel();
+			this.LayoutPanel();
+			base.Append( this.HagglePanel );
 		}
 
 
 		////
 
-		public void UpdatePanelLayout() {
-			CalculatedStyle dim = this.Panel.GetOuterDimensions();
+		public override void Recalculate() {
+			if( this.HagglePanel != null ) {
+				this.LayoutPanel();
+			}
+			base.Recalculate();
+		}
+
+
+		////
+
+		private void LayoutPanel() {
+			CalculatedStyle dim = this.HagglePanel.GetOuterDimensions();
 			float x = (float)(Main.screenWidth / 2) - (dim.Width * 0.5f);
 			float y = (float)(Main.screenHeight / 2) - (dim.Height * 0.5f);
 
-			this.Panel.Left.Set( x, 0f );
-			this.Panel.Top.Set( y, 0f );
+			this.HagglePanel.Left.Set( x, 0f );
+			this.HagglePanel.Top.Set( y, 0f );
+		}
+
+
+		////////////////
+
+		public void OpenHaggleUI() {
+			this.HagglePanel.Open();
+		}
+
+		public void CloseHaggleUI() {
+			this.HagglePanel.Close();
+		}
+
+
+		////////////////
+
+		public override void Update( GameTime gt ) {
+			this.UpdateHaggling();
+		}
+
+		////
+
+		private void UpdateHaggling() {
+			if( !this.HagglePanel.IsOpen ) {
+				return;
+			}
+
+			Player plr = Main.LocalPlayer;
+			bool isHaggling = !plr.dead
+				&& !Main.playerInventory
+				&& !plr.CCed
+				&& PirateRuffianTownNPC.GetNearbyPirate( plr ) != null;
+
+			if( !isHaggling ) {
+				this.CloseHaggleUI();
+			}
 		}
 	}
 }

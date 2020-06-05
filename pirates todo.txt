@@ -1,12 +1,27 @@
 v1
--	Implement pirate graphics
--	Implement invasions
--	Implement hostile NPC
--	Implement "demands"
+-	Implement 'Pirate Ambusher'
+	-	@Plan
+		-	When far away from the player, teleports near them, springing out of the ground
+-	Implement invasion
+	-	@Plan
+		-	When a player gets near a town house, spawn pirates as if an invasion
+		-	Pirates have 1/2 hp, 1/2 armor, and 3/4 damage
+		-	Pirates drop no loot except coins, and less of their usual amount
+		-	'Pirate Ambusher' now spawns, but no Flying Dutchman
+-	Implement "haggling"
 	-	Implement responses
-
+		-	@Plan
+			-	Pirate indicates 'offer' with his demand
+			-	A "ballpark range" (0-9g, 10-49g, 50 - 99g, etc.) occurs at start of demand
+			-	Pirate gives one attempt to "haggle" the price, giving a single reply to hint
+			-	If player's offer meets pirate's demand, pirate's offer is applied
+			-	If player's offer is >65% pirate's demand, pirate takes it and leaves
+			-	If player's offer is >35% pirate's demand, pirate takes it and leaves irrate
+			-	If player's offer is <=35% pirate's demand, pirate attacks
 	-	Implement UI
+
 	-	Define UI
+-	Implement pirate graphics
 -	Implement pirate names, chats, and demands
 -	Define pirate npc
 -	Setup project

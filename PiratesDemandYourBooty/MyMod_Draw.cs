@@ -8,28 +8,26 @@ using PiratesDemandYourBooty.UI;
 
 namespace PiratesDemandYourBooty {
 	public partial class PDYBMod : Mod {
-		public UIHagglePanel HagglePanelUI { get; private set; }
+		internal UIHaggleContextComponents UIContextComponents { get; private set; }
 
 
 		////////////////
 
 		private UserInterface UIContext;
+		private UIHagglePanel HagglePanelUI;
 
 
 
 		////////////////
 
 		private void LoadUI() {
-			var uiContextComponents = new UIHaggleContextComponents();
-			uiContextComponents.Width.Set( 0f, 1f );
-			uiContextComponents.Height.Set( 0f, 1f );
-			uiContextComponents.Activate();
+			this.UIContextComponents = new UIHaggleContextComponents();
+			this.UIContextComponents.Activate();
 
-			this.HagglePanelUI = uiContextComponents.Panel;
+			this.HagglePanelUI = this.UIContextComponents.HagglePanel;
 
 			this.UIContext = new UserInterface();
-			this.UIContext.IsVisible = true;
-			this.UIContext.SetState( uiContextComponents );
+			this.UIContext.SetState( this.UIContextComponents );
 		}
 
 

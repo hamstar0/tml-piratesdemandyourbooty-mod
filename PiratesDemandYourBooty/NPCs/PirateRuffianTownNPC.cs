@@ -106,7 +106,9 @@ namespace PiratesDemandYourBooty.NPCs {
 			if( firstButton ) {
 				Main.npcChatText = PirateRuffianTownNPC.Demands[ this.CurrentDemand ];
 			} else {
-				PDYBMod.Instance.HagglePanelUI.Open();
+				PDYBMod.Instance.UIContextComponents.OpenHaggleUI();
+				Main.npcChatText = "";
+				Main.LocalPlayer.talkNPC = -1;
 			}
 		}
 

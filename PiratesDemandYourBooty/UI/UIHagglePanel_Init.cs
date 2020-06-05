@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria.ID;
 using HamstarHelpers.Classes.UI.Elements;
-using HamstarHelpers.Helpers.Misc;
 using HamstarHelpers.Classes.UI.Theme;
+using HamstarHelpers.Helpers.Misc;
 
 
 namespace PiratesDemandYourBooty.UI {
@@ -16,7 +16,7 @@ namespace PiratesDemandYourBooty.UI {
 		////////////////
 
 		public override void OnInitialize() {
-			float xOffset = 0f;
+			float xOffset = 8f;
 			float yOffset = 0f;
 
 			this.InitializeCoinInput(
@@ -44,9 +44,12 @@ namespace PiratesDemandYourBooty.UI {
 				ref xOffset,
 				ref yOffset );
 
-			yOffset += 32f;
+			yOffset += 48f;
 
 			var offer = new UITextPanelButton( this.Theme, "Make Offer" );
+			offer.Left.Set( 0f, 0f );
+			offer.Top.Set( yOffset, 0f );
+
 			this.AppendThemed( offer );
 			this.Components.Add( offer );
 		}
@@ -60,11 +63,18 @@ namespace PiratesDemandYourBooty.UI {
 					Func<int, bool> valueFunc,
 					ref float xOffset,
 					ref float yOffset ) {
-			var input = new UITextInputAreaPanel( this.Theme, hint, 2 );
-			input.Left.Set( 0f, xOffset );
-			input.Top.Set( 0f, yOffset );
-			input.TextColor = color;
-			input.OnPreTextChange += strBuild => {
+			var titleElem = new UIThemedText( this.Theme, false, hint );
+			titleElem.Left.Set( xOffset, 0f );
+			titleElem.Top.Set( yOffset, 0f );
+			this.AppendThemed( titleElem );
+
+			var inputElem = new UITextInputAreaPanel( this.Theme, "", 2 );
+			inputElem.Left.Set( xOffset + 8f, 0f );
+			inputElem.Top.Set( yOffset + 28f, 0f );
+			inputElem.Width.Set( 80f, 0f );
+			inputElem.Height.Set( 24f, 0f );
+			inputElem.TextColor = color;
+			inputElem.OnPreTextChange += strBuild => {
 				int rawVal;
 				if( !Int32.TryParse(strBuild.ToString(), out rawVal) ) {
 					return false;
@@ -74,11 +84,10 @@ namespace PiratesDemandYourBooty.UI {
 				}
 				return valueFunc( rawVal );
 			};
+			this.AppendThemed( inputElem );
+			this.Components.Add( inputElem );
 
-			this.AppendThemed( input );
-			this.Components.Add( input );
-
-			xOffset += 32f;
+			xOffset += 112f;
 		}
 	}
 }
