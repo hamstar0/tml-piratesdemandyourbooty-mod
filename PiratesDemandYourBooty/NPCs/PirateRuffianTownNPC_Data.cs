@@ -7,7 +7,6 @@ using static Terraria.ModLoader.ModContent;
 
 namespace PiratesDemandYourBooty.NPCs {
 	public enum DemandType {
-		Impressed,
 		Normal,
 		Impatient,
 		Menacing
@@ -68,7 +67,7 @@ namespace PiratesDemandYourBooty.NPCs {
 		}.AsReadOnly();
 
 		public static IDictionary<DemandType, string> Demands { get; } = new Dictionary<DemandType, string> {
-			{
+			/*{
 				DemandType.Impressed, "Yarrharr! Top o' th' mornin' to ye, scallywag!"
 					+ " Y'know, we pirate folk haves our reputations n' all, but nary ye'll meet a more honest n' fair crew than mine!"
 					+ " Th'captain likes to reward our more generous, err, patrons with a special offer like no other!"
@@ -76,13 +75,14 @@ namespace PiratesDemandYourBooty.NPCs {
 					+ " Harharhar, a catch ye say? Nay! There bein' just but one wee stipulation, however:"
 					+ " Seein' as how we've got our other merry donors, we can only extend this fine offer to but one lucky soul."
 					+ " If'n ye brings us the greatest booty of them all, our offer is yers!"
-			},
+			},*/
 			{
-				DemandType.Normal, "Ahoy thar, matey! A swell day it is!"
+				DemandType.Normal, "  Ahoy thar, matey! A swell day it is!"
 					+ " I come on behalf of me shipmates to beleager ye fer a humble donation."
-					+ " T'would be a shame if'n us lads had to leave empty handed."
-					+ " I beseech ye t' ponder this 'til the next sunrise."
-					+ "\n \nMethinks I be layin' up me sea legs hereabouts, in the meanwhile..."
+					+ " T'would be a shame if me mates had to leave empty handed..."
+					+ "\n  Don't thinkin' we be all greed n' huff. We've donors from all abouts, and we likes to treat 'em fair-like."
+					+ " If'n ye be the most generous of the lot, ye'll keep yer booty, with interest!"
+					+ "\n  Whilst awaitin' yer reply, I be layin' up me sea legs hereabouts until the next sunrise."
 			},
 			{
 				DemandType.Impatient, "Now see here, friend. We be havin' a hard time o' the sea farin' life."
@@ -91,7 +91,7 @@ namespace PiratesDemandYourBooty.NPCs {
 			},
 			{
 				DemandType.Menacing, "Yarr! I be more than generous leavin' ye breadth fer settlin' yer doubtin' noodle."
-					+ " We haven't time fer ye to be runnin' a rig on us poor blokes."
+					+ " We haven't time fer ye t' be runnin' a rig on us poor blokes."
 					+ " Ye gots one more sunrise. Savvy?"
 			}
 		};
@@ -99,7 +99,7 @@ namespace PiratesDemandYourBooty.NPCs {
 
 		public static IDictionary<NegotiationReplyType, string[]> NegotiationReplies { get; } = new Dictionary<NegotiationReplyType, string[]> {
 			{ NegotiationReplyType.VeryHigh, new string[] {
-				"Shiver me t... er, ye gots the right idea, laddy."
+				"Shiver me t... er, ye gots the right idea, laddy. Ehehehe!"
 			} },
 			{ NegotiationReplyType.High, new string[] {
 				"*strokes chin*"

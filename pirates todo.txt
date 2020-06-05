@@ -10,6 +10,7 @@ v1
 		-	'Pirate Ambusher' now spawns, but no Flying Dutchman
 -	Implement "haggling"
 	-	Implement responses
+		-	Implement one-time haggle reply
 		-	@Plan
 			-	Pirate indicates 'offer' with his demand
 			-	A "ballpark range" (0-9g, 10-49g, 50 - 99g, etc.) occurs at start of demand
@@ -18,6 +19,7 @@ v1
 			-	If player's offer is >65% pirate's demand, pirate takes it and leaves
 			-	If player's offer is >35% pirate's demand, pirate takes it and leaves irrate
 			-	If player's offer is <=35% pirate's demand, pirate attacks
+		-	Revise dialog to indicate "ballpark demand range"
 
 	-	Implement UI
 	-	Define UI
