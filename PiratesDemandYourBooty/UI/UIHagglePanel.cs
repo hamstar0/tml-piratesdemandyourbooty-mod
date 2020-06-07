@@ -47,6 +47,20 @@ namespace PiratesDemandYourBooty.UI {
 
 
 		////////////////
+		
+		public void Reset() {
+			this.Value = 0;
+
+			foreach( IToggleable elem in this.Components ) {
+				var textElem = elem as UITextInputAreaPanel;
+				if( textElem == null ) { continue; }
+
+				textElem.SetTextDirect( "0" );
+			}
+		}
+
+
+		////////////////
 
 		public override void Update( GameTime gameTime ) {
 			if( this.IsOpen ) {

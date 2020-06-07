@@ -10,9 +10,10 @@ v1
 		-	'Pirate Ambusher' now spawns, but no Flying Dutchman
 -	Implement "haggling"
 	-	Implement responses
+		-	Lock player items while haggling
 		-	Implement one-time haggle reply
-		-	Fix inputs
 
+		-	Fix inputs
 		-	Revise dialog to indicate "ballpark demand range"
 		-	@Plan
 			-	Pirate indicates 'offer' with his demand

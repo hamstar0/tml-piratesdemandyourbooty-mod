@@ -1,7 +1,6 @@
 ﻿using System;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 using HamstarHelpers.Classes.Errors;
 using HamstarHelpers.Classes.Protocols.Packet.Interfaces;
 using static Terraria.ModLoader.ModContent;
@@ -34,13 +33,11 @@ namespace PiratesDemandYourBooty.NetProtocols {
 		////////////////
 
 		protected override void ReceiveOnClient() {
-			var myworld = GetInstance<PDYBWorld>();
-			myworld.ReceiveReplyForPirate( this.Reply );
+			PDYBWorld.HaggleLogic.ReceiveReplyForPirate( this.Reply );
 		}
 
 		protected override void ReceiveOnServer( int fromWho ) {
-			var myworld = GetInstance<PDYBWorld>();
-			myworld.ReceiveReplyForPirate( this.Reply );
+			PDYBWorld.HaggleLogic.ReceiveReplyForPirate( this.Reply );
 		}
 	}
 }

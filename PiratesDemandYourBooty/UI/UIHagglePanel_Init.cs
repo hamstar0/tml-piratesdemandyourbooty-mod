@@ -18,6 +18,7 @@ namespace PiratesDemandYourBooty.UI {
 		////////////////
 
 		public override void OnInitialize() {
+			var logic = PDYBWorld.HaggleLogic;
 			float xOffset = 8f;
 			float yOffset = 0f;
 
@@ -51,9 +52,15 @@ namespace PiratesDemandYourBooty.UI {
 			var offerBut = new UITextPanelButton( this.Theme, "Make Offer" );
 			offerBut.Left.Set( 0f, 0f );
 			offerBut.Top.Set( yOffset, 0f );
+			offerBut.OnClick += ( _, __ ) => {
+				if( logic.ReceiveReplyForPirate(this.Value) ) {
+					this.Close();
+				} else {
+					this.Reset();
+				}
+			};
 
-			var myworld = GetInstance<PDYBWorld>();
-			string unit = PDYBWorld.GetHighestCoinTypeOfGivenDemand( myworld.PirateDemand, out bool tensOf );
+			string unit = HaggleLogic.GetHighestCoinTypeOfGivenDemand( logic.PirateDemand, out bool tensOf );
 			string range = tensOf ? "10-99" : "0-10";
 
 			var titleElem = new UIThemedText( this.Theme, false, "Pirate hints at "+range+" "+unit );
