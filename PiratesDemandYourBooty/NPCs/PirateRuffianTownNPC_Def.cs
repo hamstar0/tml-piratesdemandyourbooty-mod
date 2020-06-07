@@ -24,6 +24,7 @@ namespace PiratesDemandYourBooty.NPCs {
 		}
 
 
+
 		////////////////
 
 		private bool HasFirstChat = false;

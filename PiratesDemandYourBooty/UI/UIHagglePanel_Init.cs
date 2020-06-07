@@ -5,6 +5,7 @@ using Terraria.ID;
 using HamstarHelpers.Classes.UI.Elements;
 using HamstarHelpers.Classes.UI.Theme;
 using HamstarHelpers.Helpers.Misc;
+using static Terraria.ModLoader.ModContent;
 
 
 namespace PiratesDemandYourBooty.UI {
@@ -49,6 +50,15 @@ namespace PiratesDemandYourBooty.UI {
 			var offer = new UITextPanelButton( this.Theme, "Make Offer" );
 			offer.Left.Set( 0f, 0f );
 			offer.Top.Set( yOffset, 0f );
+
+			var myworld = GetInstance<PDYBWorld>();
+			string unit = PDYBWorld.GetHighestCoinTypeOfGivenDemand( myworld.PirateDemand, out bool tensOf );
+			string range = tensOf ? "10-99" : "0-9";
+
+			var titleElem = new UIThemedText( this.Theme, false, "Pirate hints at "+range+" "+unit );
+			titleElem.Left.Set( -192f, 1f );
+			titleElem.Top.Set( 0f, 0f );
+			this.AppendThemed( titleElem );
 
 			this.AppendThemed( offer );
 			this.Components.Add( offer );

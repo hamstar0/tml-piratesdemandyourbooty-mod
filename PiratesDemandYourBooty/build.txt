@@ -1,6 +1,6 @@
 displayName = Pirates Demand Your Booty!
 author = hamstar
-version = 0.2.1
+version = 0.2.2
 modReferences = HamstarHelpers@5.7.4
 buildIgnore = *.csproj, *.user, *.bat, obj\*, bin\*, .vs\*, .git\*
 homepage = https://github.com/hamstar0/tml-piratesdemandyourbooty-mod
