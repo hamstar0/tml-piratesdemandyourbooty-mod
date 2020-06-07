@@ -11,6 +11,7 @@ v1
 -	Implement "haggling"
 	-	Implement responses
 		-	Implement one-time haggle reply
+		-	Fix inputs
 
 		-	Revise dialog to indicate "ballpark demand range"
 		-	@Plan

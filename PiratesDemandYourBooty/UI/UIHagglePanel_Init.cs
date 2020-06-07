@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Terraria;
 using Terraria.ID;
 using HamstarHelpers.Classes.UI.Elements;
 using HamstarHelpers.Classes.UI.Theme;
@@ -45,23 +46,23 @@ namespace PiratesDemandYourBooty.UI {
 				ref xOffset,
 				ref yOffset );
 
-			yOffset += 48f;
+			yOffset += 72f;
 
-			var offer = new UITextPanelButton( this.Theme, "Make Offer" );
-			offer.Left.Set( 0f, 0f );
-			offer.Top.Set( yOffset, 0f );
+			var offerBut = new UITextPanelButton( this.Theme, "Make Offer" );
+			offerBut.Left.Set( 0f, 0f );
+			offerBut.Top.Set( yOffset, 0f );
 
 			var myworld = GetInstance<PDYBWorld>();
 			string unit = PDYBWorld.GetHighestCoinTypeOfGivenDemand( myworld.PirateDemand, out bool tensOf );
-			string range = tensOf ? "10-99" : "0-9";
+			string range = tensOf ? "10-99" : "0-10";
 
 			var titleElem = new UIThemedText( this.Theme, false, "Pirate hints at "+range+" "+unit );
-			titleElem.Left.Set( -192f, 1f );
-			titleElem.Top.Set( 0f, 0f );
+			titleElem.Left.Set( -256f, 1f );
+			titleElem.Top.Set( yOffset, 0f );
 			this.AppendThemed( titleElem );
 
-			this.AppendThemed( offer );
-			this.Components.Add( offer );
+			this.AppendThemed( offerBut );
+			this.Components.Add( offerBut );
 		}
 
 
@@ -79,25 +80,42 @@ namespace PiratesDemandYourBooty.UI {
 			this.AppendThemed( titleElem );
 
 			var inputElem = new UITextInputAreaPanel( this.Theme, "", 2 );
-			inputElem.Left.Set( xOffset + 8f, 0f );
+			inputElem.Left.Set( xOffset, 0f );
 			inputElem.Top.Set( yOffset + 28f, 0f );
-			inputElem.Width.Set( 80f, 0f );
-			inputElem.Height.Set( 24f, 0f );
+			inputElem.Width.Set( 96f, 0f );
+			inputElem.Height.Pixels = 36f;
+			//inputElem.SetPadding( 0f );
+			inputElem.HAlign = 0f;
+			inputElem.SetTextDirect( "0" );
 			inputElem.TextColor = color;
 			inputElem.OnPreTextChange += strBuild => {
-				int rawVal;
-				if( !Int32.TryParse(strBuild.ToString(), out rawVal) ) {
-					return false;
+				string str = strBuild.ToString();
+				if( !Int32.TryParse(str, out int rawVal) ) {
+					return str != "";
 				}
-				if( rawVal < 0 || rawVal >= 100 ) {
-					return false;
+				return true;
+			};
+			inputElem.OnUnfocus += () => {
+				if( !Int32.TryParse(inputElem.Text, out int rawVal) ) {
+					inputElem.SetTextDirect( "0" );
+					return;
 				}
-				return valueFunc( rawVal );
+
+				int newVal = (int)MathHelper.Clamp( rawVal, 0, 99 );
+				if( newVal != rawVal ) {
+					inputElem.SetTextDirect( ""+newVal );
+				}
+
+				if( newVal > 0 && !valueFunc(newVal) ) {
+					inputElem.SetTextDirect( "0" );
+					Main.NewText( "Not enough money!", Color.Yellow );
+					return;
+				}
 			};
 			this.AppendThemed( inputElem );
 			this.Components.Add( inputElem );
 
-			xOffset += 112f;
+			xOffset += 128f;
 		}
 	}
 }

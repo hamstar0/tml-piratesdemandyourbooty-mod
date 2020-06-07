@@ -14,7 +14,6 @@ namespace PiratesDemandYourBooty {
 		////////////////
 
 		private UserInterface UIContext;
-		private UIHagglePanel HagglePanelUI;
 
 
 
@@ -24,8 +23,6 @@ namespace PiratesDemandYourBooty {
 			this.UIContextComponents = new UIHaggleContextComponents();
 			this.UIContextComponents.Activate();
 
-			this.HagglePanelUI = this.UIContextComponents.HagglePanel;
-
 			this.UIContext = new UserInterface();
 			this.UIContext.SetState( this.UIContextComponents );
 		}
@@ -34,7 +31,7 @@ namespace PiratesDemandYourBooty {
 		////////////////
 
 		public override void UpdateUI( GameTime gameTime ) {
-			this.UIContext?.Update( Main._drawInterfaceGameTime );
+			this.UIContext?.Update( gameTime );
 		}
 
 
@@ -43,7 +40,7 @@ namespace PiratesDemandYourBooty {
 			if( idx == -1 ) { return; }
 
 			GameInterfaceDrawMethod haggleUI = () => {
-				this.UIContext.Draw( Main.spriteBatch, Main._drawInterfaceGameTime );
+				this.UIContext?.Draw( Main.spriteBatch, Main._drawInterfaceGameTime );
 				return true;
 			};
 

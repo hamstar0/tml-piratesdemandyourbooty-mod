@@ -8,11 +8,11 @@ using static Terraria.ModLoader.ModContent;
 namespace PiratesDemandYourBooty {
 	class PDYBWorld : ModWorld {
 		public static string GetHighestCoinTypeOfGivenDemand( long demand, out bool tensOf ) {
-			int baseLog10= (int)Math.Log10( demand );
+			int baseLog10 = (int)Math.Log10( demand );
 			//int baseLog100 = (int)(Math.Log10( demand ) * 0.5d);
 			//long logged = (long)Math.Pow( 100, baseLog100 );
 
-			tensOf = (baseLog10 % 2) == 0;
+			tensOf = (baseLog10 % 2) != 0;
 
 			switch( baseLog10 ) {
 			case 0:

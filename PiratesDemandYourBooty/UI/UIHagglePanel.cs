@@ -18,8 +18,8 @@ namespace PiratesDemandYourBooty.UI {
 		////////////////
 
 		public UIHagglePanel() : base( UITheme.Vanilla, false ) {
-			this.Width.Set( 480f, 0f );
-			this.Height.Set( 96f, 0f );
+			this.Width.Set( 512f, 0f );
+			this.Height.Set( 112f, 0f );
 		}
 
 

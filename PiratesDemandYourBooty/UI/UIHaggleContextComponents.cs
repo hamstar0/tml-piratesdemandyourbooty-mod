@@ -3,21 +3,26 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.UI;
 using HamstarHelpers.Helpers.Debug;
+using HamstarHelpers.Classes.UI.Theme;
 using PiratesDemandYourBooty.NPCs;
 
 
 namespace PiratesDemandYourBooty.UI {
-	class UIHaggleContextComponents : UIState {
+	class UIHaggleContextComponents : UIThemedState {
 		public UIHagglePanel HagglePanel { get; private set; }
 
 
 
 		////////////////
 
+		public UIHaggleContextComponents() : base( UITheme.Vanilla, false ) { }
+
+		////
+
 		public override void OnInitialize() {
 			this.HagglePanel = new UIHagglePanel();
 			this.LayoutPanel();
-			base.Append( this.HagglePanel );
+			this.AppendThemed( this.HagglePanel );
 		}
 
 
@@ -58,6 +63,7 @@ namespace PiratesDemandYourBooty.UI {
 
 		public override void Update( GameTime gt ) {
 			this.UpdateHaggling();
+			base.Update( gt );
 		}
 
 		////
@@ -73,7 +79,9 @@ namespace PiratesDemandYourBooty.UI {
 				&& !plr.CCed
 				&& PirateRuffianTownNPC.GetNearbyPirate( plr ) != null;
 
-			if( !isHaggling ) {
+			if( isHaggling ) {
+				plr.noItems = true;
+			} else {
 				this.CloseHaggleUI();
 			}
 		}

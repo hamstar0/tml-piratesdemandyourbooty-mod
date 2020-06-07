@@ -109,7 +109,7 @@ namespace PiratesDemandYourBooty.NPCs {
 			} else {
 				PDYBMod.Instance.UIContextComponents.OpenHaggleUI();
 				Main.npcChatText = "";
-				Main.LocalPlayer.talkNPC = -1;
+				//Main.LocalPlayer.talkNPC = -1;
 			}
 		}
 
