@@ -29,12 +29,14 @@ namespace PiratesDemandYourBooty.NPCs {
 
 		private bool HasFirstChat = false;
 
-		private int HaggleAttempts = 0;
+		private bool OfferTested = false;
+
+		private long OfferAmount = -1;
 
 
 		////////////////
 
-		public DemandType CurrentDemand { get; private set; } = DemandType.Normal;
+		public bool HagglingDone => this.OfferAmount != -1;
 
 		////
 
@@ -75,48 +77,18 @@ namespace PiratesDemandYourBooty.NPCs {
 			this.animationType = NPCID.Guide;
 		}
 
-
-		////
+		////////////////
 
 		public override bool CanTownNPCSpawn( int numTownNPCs, int money ) {
 			return true;
 		}
 
+		////////////////
+
 		public override string TownNPCName() {
 			int i = WorldGen.genRand.Next( PirateRuffianTownNPC.Names.Count );
-			return PirateRuffianTownNPC.Names[ i ];
+			return PirateRuffianTownNPC.Names[i];
 		}
-
-		public override string GetChat() {
-			if( !this.HasFirstChat ) {
-				this.HasFirstChat = true;
-				return PirateRuffianTownNPC.Demands[ this.CurrentDemand ];
-			}
-
-			int i = Main.rand.Next( PirateRuffianTownNPC.Chats.Count );
-			return PirateRuffianTownNPC.Chats[i];
-		}
-
-
-		////////////////
-
-		public override void SetChatButtons( ref string button1, ref string button2 ) {
-			button1 = "Repeat \"plea\"";
-			button2 = "Offer booty...";
-		}
-
-		public override void OnChatButtonClicked( bool firstButton, ref bool shop ) {
-			if( firstButton ) {
-				Main.npcChatText = PirateRuffianTownNPC.Demands[ this.CurrentDemand ];
-			} else {
-				PDYBMod.Instance.UIContextComponents.OpenHaggleUI();
-				Main.npcChatText = "";
-				//Main.LocalPlayer.talkNPC = -1;
-			}
-		}
-
-
-		////////////////
 
 		public override void NPCLoot() {
 			Item.NewItem( this.npc.getRect(), ItemID.PoisonedKnife, 99 );
@@ -147,6 +119,15 @@ namespace PiratesDemandYourBooty.NPCs {
 		public override void TownNPCAttackProjSpeed( ref float multiplier, ref float gravityCorrection, ref float randomOffset ) {
 			multiplier = 8f;
 			randomOffset = 2f;
+		}
+
+
+		////////////////
+
+		public override bool PreAI() {
+			this.UpdateHaggleState();
+				
+			return base.PreAI();
 		}
 	}
 }

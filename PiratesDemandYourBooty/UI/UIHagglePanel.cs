@@ -1,17 +1,18 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using HamstarHelpers.Classes.UI.Elements;
 using HamstarHelpers.Classes.UI.Theme;
 using HamstarHelpers.Helpers.Debug;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using HamstarHelpers.Helpers.Players;
 
 
 namespace PiratesDemandYourBooty.UI {
 	public partial class UIHagglePanel : UIThemedPanel {
 		public bool IsOpen { get; private set; } = false;
 
-		public long Value { get; private set; }
+		public long OfferTotal { get; private set; }
 
 
 
@@ -49,7 +50,7 @@ namespace PiratesDemandYourBooty.UI {
 		////////////////
 		
 		public void Reset() {
-			this.Value = 0;
+			this.OfferTotal = 0;
 
 			foreach( IToggleable elem in this.Components ) {
 				var textElem = elem as UITextInputAreaPanel;
@@ -65,6 +66,12 @@ namespace PiratesDemandYourBooty.UI {
 		public override void Update( GameTime gameTime ) {
 			if( this.IsOpen ) {
 				base.Update( gameTime );
+
+				long money = PlayerItemHelpers.CountMoney( Main.LocalPlayer, false );
+				if( this.OfferTotal > money ) {
+					this.Reset();
+					Main.NewText( "Don't be tryin t' pull a fast one, matey!", Color.Yellow );
+				}
 			}
 		}
 

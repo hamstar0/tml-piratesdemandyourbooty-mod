@@ -1,5 +1,7 @@
 using Terraria;
+using Terraria.UI;
 using Terraria.ModLoader;
+using PiratesDemandYourBooty.UI;
 
 
 namespace PiratesDemandYourBooty {
@@ -12,6 +14,16 @@ namespace PiratesDemandYourBooty {
 
 		public static PDYBMod Instance { get; private set; }
 
+
+
+		////////////////
+
+		private UserInterface UIContext;
+
+
+		////////////////
+
+		internal UIHaggleContextComponents UIContextComponents { get; private set; }
 
 
 		////////////////

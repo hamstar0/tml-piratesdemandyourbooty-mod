@@ -47,7 +47,7 @@ namespace PiratesDemandYourBooty.NPCs {
 			"Yaargh!"
 		}.AsReadOnly();
 
-		public static IDictionary<DemandType, string> Demands { get; } = new Dictionary<DemandType, string> {
+		public static IDictionary<PirateMood, string> Demands { get; } = new Dictionary<PirateMood, string> {
 			/*{
 				DemandType.Impressed, "Yarrharr! Top o' th' mornin' to ye, scallywag!"
 					+ " Y'know, we pirate folk haves our reputations n' all, but nary ye'll meet a more honest n' fair crew than mine!"
@@ -58,7 +58,7 @@ namespace PiratesDemandYourBooty.NPCs {
 					+ " If'n ye brings us the greatest booty of them all, our offer is yers!"
 			},*/
 			{
-				DemandType.Normal, "  Ahoy thar, matey! A swell day it is!"
+				PirateMood.Normal, "  Ahoy thar, matey! A swell day it is!"
 					+ " I come on behalf of me shipmates to beleager ye fer a humble donation."
 					+ " T'would be a shame if me mates had to leave empty handed..."
 					+ "\n  Don't thinkin' we be all greed n' huff. We've donors from all abouts, and we likes to treat 'em fair-like."
@@ -66,35 +66,24 @@ namespace PiratesDemandYourBooty.NPCs {
 					+ "\n  Whilst awaitin' yer reply, I be layin' up me sea legs hereabouts until the next sunrise."
 			},
 			{
-				DemandType.Impatient, "Now see here, friend. We be havin' a hard time o' the sea farin' life."
+				PirateMood.Impatient, "Now see here, friend. We be havin' a hard time o' the sea farin' life."
 					+ " Surely ye must find it in yer heart to spot us scurvy sea dogs a wee pitance or two."
 					+ " I gives ye til' another sunrise to think it over."
 			},
 			{
-				DemandType.Menacing, "Yarr! I be more than generous leavin' ye breadth fer settlin' yer doubtin' noodle."
+				PirateMood.Menacing, "Yarr! I be more than generous leavin' ye breadth fer settlin' yer doubtin' noodle."
 					+ " We haven't time fer ye t' be runnin' a rig on us poor blokes."
 					+ " Ye gots one more sunrise. Savvy?"
 			}
 		};
 
 
-		public static IDictionary<HaggleReplyType, string[]> HaggleReplies { get; } = new Dictionary<HaggleReplyType, string[]> {
-			{ HaggleReplyType.VeryHigh, new string[] {
-				"Shiver me t... er, ye gots the right idea, laddy. Ehehehe!"
-			} },
-			{ HaggleReplyType.High, new string[] {
-				"*strokes chin*"
-			} },
-			{ HaggleReplyType.Good, new string[] {
-				"..."
-			} },
-			{ HaggleReplyType.Low, new string[] {
-				"What do I looks like to ye, a street corner wretch?! Ye should plumb yer pock... er, heart fer moren' jus' spare change."
-			} },
-			{ HaggleReplyType.TooLow, new string[] {
-				"Yar har har har HAR! Ye've gots a sense o' humor, ye do!",
-				"Scupper that! 'Tis an insult just to look at. I be done with ye, now. I be seein' ye again real soon..."
-			} },
+		public static IDictionary<HaggleReplyType, string> HaggleReplies { get; } = new Dictionary<HaggleReplyType, string> {
+			{ HaggleReplyType.VeryHigh, "Shiver me t... er, ye gots the right idea, laddy. Ehehehe!" },
+			{ HaggleReplyType.High, "*strokes chin*" },
+			{ HaggleReplyType.Good, "..." },
+			{ HaggleReplyType.Low, "What do I looks like to ye, a street corner wretch?! Ye should plumb yer pock... er, heart fer moren' jus' spare change." },
+			{ HaggleReplyType.TooLow, "Yar har har har HAR! Ye've gots a sense o' humor, ye do!" },
 		};
 
 
@@ -103,7 +92,8 @@ namespace PiratesDemandYourBooty.NPCs {
 			{ HaggleReplyType.High, "Pleasure doin' business wit' ye!" },
 			{ HaggleReplyType.Good, "'Tis acceptable." },
 			{ HaggleReplyType.Low, "Arrr! No good! I be takin' what you got, but ye best nah be as stingy th' next time." },
-			{ HaggleReplyType.TooLow, "No sense o' charity be wit' ye? Mayhaps we take some o' the burden off o' ye. Unhand yer booty." },
+			{ HaggleReplyType.TooLow, "Scupper that! 'Tis an insult jus' t' look at. I suppose'n we jus' take our due th' hard way, then. Unhand yer booty." },
+			//{ HaggleReplyType.TooLow, "No sense o' charity? Mayhaps we take some o' the burden off o' ye. Unhand yer booty." },
 		};
 	}
 }

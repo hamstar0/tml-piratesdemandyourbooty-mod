@@ -79,10 +79,10 @@ namespace PiratesDemandYourBooty.UI {
 				&& !plr.CCed
 				&& PirateRuffianTownNPC.GetNearbyPirateNPC( plr ) != null;
 
-			if( isHaggling ) {
-				plr.noItems = true;
-			} else {
+			if( !isHaggling ) {
 				this.CloseHaggleUI();
+			} else {
+				//plr.noItems = true;
 			}
 		}
 	}

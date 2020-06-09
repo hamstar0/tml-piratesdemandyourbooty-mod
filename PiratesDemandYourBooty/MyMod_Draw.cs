@@ -8,17 +8,6 @@ using PiratesDemandYourBooty.UI;
 
 namespace PiratesDemandYourBooty {
 	public partial class PDYBMod : Mod {
-		internal UIHaggleContextComponents UIContextComponents { get; private set; }
-
-
-		////////////////
-
-		private UserInterface UIContext;
-
-
-
-		////////////////
-
 		private void LoadUI() {
 			this.UIContextComponents = new UIHaggleContextComponents();
 			this.UIContextComponents.Activate();

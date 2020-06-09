@@ -5,7 +5,7 @@ using Terraria.ModLoader.IO;
 
 
 namespace PiratesDemandYourBooty {
-	public enum DemandType {
+	public enum PirateMood {
 		Normal,
 		Impatient,
 		Menacing
@@ -24,6 +24,8 @@ namespace PiratesDemandYourBooty {
 
 	partial class HaggleLogic {
 		public long PirateDemand { get; private set; } = 10 * 100 * 100;    // 10 gold, initially
+
+		public PirateMood Patience { get; private set; } = PirateMood.Normal;
 
 
 

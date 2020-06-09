@@ -53,6 +53,7 @@ namespace PiratesDemandYourBooty {
 		////////////////
 
 		public void GiveFinalOffer( long offerAmount ) {
+			f
 		}
 	}
 }

@@ -8,11 +8,12 @@ v1
 		-	Pirates have 1/2 hp, 1/2 armor, and 3/4 damage
 		-	Pirates drop no loot except coins, and less of their usual amount
 		-	'Pirate Ambusher' now spawns, but no Flying Dutchman
+-	Implement pirate exit
+
 -	Implement "haggling"
 	-	Implement responses
-		-	Lock player items while haggling
+		-	Lock player item use while haggling
 		-	Implement final haggle reply
-
 		-	Implement one-time haggle reply
 		-	Fix inputs
 		-	Revise dialog to indicate "ballpark demand range"

@@ -13,7 +13,7 @@ namespace PiratesDemandYourBooty.UI {
 				return false;
 			}
 
-			long value = this.Value;
+			long value = this.OfferTotal;
 
 			switch( coinItemType ) {
 			case ItemID.PlatinumCoin:
@@ -21,19 +21,19 @@ namespace PiratesDemandYourBooty.UI {
 				value += (long)newTypedValue * 1000000L;
 				break;
 			case ItemID.GoldCoin:
-				long plats = this.Value / 1000000L;
+				long plats = this.OfferTotal / 1000000L;
 				value %= 10000;
 				value += (long)newTypedValue * 10000;
 				value += plats * 1000000L;
 				break;
 			case ItemID.SilverCoin:
-				long golds = this.Value / 10000L;
+				long golds = this.OfferTotal / 10000L;
 				value %= 100;
 				value += (long)newTypedValue * 100L;
 				value += golds * 10000L;
 				break;
 			case ItemID.CopperCoin:
-				long silvs = this.Value / 100L;
+				long silvs = this.OfferTotal / 100L;
 				value += (long)newTypedValue;
 				value += silvs * 100L;
 				break;
@@ -46,7 +46,7 @@ namespace PiratesDemandYourBooty.UI {
 				return false;
 			}
 
-			this.Value = value;
+			this.OfferTotal = value;
 
 			return true;
 		}

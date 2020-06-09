@@ -14,7 +14,7 @@ namespace PiratesDemandYourBooty.UI {
 				this.Close();
 			}
 
-			if( mynpc.GiveOffer(this.Value) ) {
+			if( mynpc.GiveOffer(this.OfferTotal) ) {
 				this.Close();
 			} else {
 				//this.Reset();
