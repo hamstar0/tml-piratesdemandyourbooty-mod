@@ -26,5 +26,8 @@ namespace PiratesDemandYourBooty {
 		[DefaultValue( 0.15f )]
 		[CustomModConfigItem( typeof(MyFloatInputElement) )]
 		public float PirateInterestPercent { get; set; } = 0.15f;
+
+		[DefaultValue( 60 * 60 * 15 )]
+		public long InvasionDurationTicks { get; set; } = 60 * 60 * 15;
 	}
 }

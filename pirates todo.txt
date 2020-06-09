@@ -3,7 +3,12 @@ v1
 -	Implement 'Pirate Ambusher'
 	-	@Plan
 		-	When far away from the player, teleports near them, springing out of the ground
+-	Implement town NPC respawn conditions
 -	Implement invasion
+	-	Stop pirates from dropping loot items (except coins)
+	-	Modify pirate stats
+	-	Spawn pirates from pool when player is near a town
+
 	-	@Plan
 		-	When a player gets near a town house, spawn pirates as if an invasion
 		-	Pirates have 1/2 hp, 1/2 armor, and 3/4 damage
@@ -11,7 +16,6 @@ v1
 		-	'Pirate Ambusher' now spawns, but no Flying Dutchman
 -	Implement "haggling"
 	-	Implement on return mood state
-
 	-	Implement responses
 		-	Lock player item use while haggling
 		-	Implement final haggle reply

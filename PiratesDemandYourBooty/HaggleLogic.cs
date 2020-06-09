@@ -27,6 +27,12 @@ namespace PiratesDemandYourBooty {
 
 		public PirateMood Patience { get; private set; } = PirateMood.Normal;
 
+		public long InvasionDurationTicks { get; private set; } = 0;
+
+		////
+
+		public bool IsInvading => this.InvasionDurationTicks > 0;
+
 
 
 		////////////////
@@ -57,7 +63,7 @@ namespace PiratesDemandYourBooty {
 		////////////////
 
 		public void BeginInvasion( Player player ) {
-
+			this.InvasionDurationTicks = PDYBConfig.Instance.InvasionDurationTicks;
 		}
 	}
 }
