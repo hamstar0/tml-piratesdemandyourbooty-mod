@@ -1,5 +1,7 @@
 ﻿using System;
 using Terraria;
+using Terraria.ID;
+using HamstarHelpers.Helpers.Items;
 
 
 namespace PiratesDemandYourBooty {
@@ -33,27 +35,83 @@ namespace PiratesDemandYourBooty {
 
 		////////////////
 
-		public HaggleReplyType GaugeOffer( long offer ) {
+		public HaggleAmount GaugeOffer( long offer ) {
 			double measure = (double)offer / (double)this.PirateDemand;
 
 			if( measure >= 1.75d ) {
-				return HaggleReplyType.VeryHigh;
+				return HaggleAmount.VeryHigh;
 			} else if( measure >= 1.25d && measure < 1.75d ) {
-				return HaggleReplyType.High;
+				return HaggleAmount.High;
 			} else if( measure >= 1.0d && measure < 1.25d ) {
-				return HaggleReplyType.Good;
+				return HaggleAmount.Good;
 			} else if( measure >= 0.5d && measure < 1.0d ) {
-				return HaggleReplyType.Low;
+				return HaggleAmount.Low;
 			} else {    // if( measure < 0.5d )
-				return HaggleReplyType.TooLow;
+				return HaggleAmount.TooLow;
 			}
 		}
 
 
 		////////////////
 
-		public void GiveFinalOffer( long offerAmount ) {
-			f
+		public void GiveFinalOffer( Player player, long offerAmount ) {
+			HaggleAmount measure = this.GaugeOffer( offerAmount );
+
+			switch( measure ) {
+			case HaggleAmount.VeryHigh:
+			case HaggleAmount.High:
+			case HaggleAmount.Good:
+				this.GiveGoodOffer( player, offerAmount );
+				break;
+			case HaggleAmount.Low:
+				switch( this.Patience ) {
+				case PirateMood.Normal:
+					this.Patience = PirateMood.Impatient;
+					this.GiveLowOffer( player, offerAmount );
+					break;
+				case PirateMood.Impatient:
+					this.Patience = PirateMood.Menacing;
+					this.GiveLowOffer( player, offerAmount );
+					break;
+				case PirateMood.Menacing:
+					this.Patience = PirateMood.Normal;
+					this.BeginInvasion( player );
+					break;
+				}
+				break;
+			case HaggleAmount.TooLow:
+				this.BeginInvasion( player );
+				break;
+			}
+		}
+
+		////
+
+		private void GiveGoodOffer( Player player, long offerAmount ) {
+			if( Main.netMode == NetmodeID.MultiplayerClient ) {
+				return;
+			}
+
+			int[] itemWhos = ItemHelpers.CreateCoins(
+				amount: (long)( (double)offerAmount * PDYBConfig.Instance.PirateInterestPercent ),
+				position: player.Center
+			);
+
+			if( Main.netMode == NetmodeID.Server ) {
+				foreach( int itemWho in itemWhos ) {
+					NetMessage.SendData(
+						msgType: MessageID.SyncItem,
+						remoteClient: -1,
+						ignoreClient: -1,
+						text: null,
+						number: itemWho
+					);
+				}
+			}
+		}
+
+		private void GiveLowOffer( Player player, long offerAmount ) {
+			player.BuyItem( (int)offerAmount );
 		}
 	}
 }

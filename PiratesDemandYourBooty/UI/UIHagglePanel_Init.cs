@@ -94,7 +94,7 @@ namespace PiratesDemandYourBooty.UI {
 			inputElem.OnPreTextChange += strBuild => {
 				string str = strBuild.ToString();
 				if( !Int32.TryParse(str, out int rawVal) ) {
-					return str != "";
+					return str == "";
 				}
 				return true;
 			};

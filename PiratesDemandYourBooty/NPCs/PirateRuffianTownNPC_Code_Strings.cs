@@ -78,21 +78,21 @@ namespace PiratesDemandYourBooty.NPCs {
 		};
 
 
-		public static IDictionary<HaggleReplyType, string> HaggleReplies { get; } = new Dictionary<HaggleReplyType, string> {
-			{ HaggleReplyType.VeryHigh, "Shiver me t... er, ye gots the right idea, laddy. Ehehehe!" },
-			{ HaggleReplyType.High, "*strokes chin*" },
-			{ HaggleReplyType.Good, "..." },
-			{ HaggleReplyType.Low, "What do I looks like to ye, a street corner wretch?! Ye should plumb yer pock... er, heart fer moren' jus' spare change." },
-			{ HaggleReplyType.TooLow, "Yar har har har HAR! Ye've gots a sense o' humor, ye do!" },
+		public static IDictionary<HaggleAmount, string> HaggleReplies { get; } = new Dictionary<HaggleAmount, string> {
+			{ HaggleAmount.VeryHigh, "Shiver me t... er, ye gots the right idea, laddy. Ehehehe!" },
+			{ HaggleAmount.High, "*strokes chin*" },
+			{ HaggleAmount.Good, "..." },
+			{ HaggleAmount.Low, "What do I looks like to ye, a street corner wretch?! Ye should plumb yer pock... er, heart fer moren' jus' spare change." },
+			{ HaggleAmount.TooLow, "Yar har har har HAR! Ye've gots a sense o' humor, ye do!" },
 		};
 
 
-		public static IDictionary<HaggleReplyType, string> OfferReplies { get; } = new Dictionary<HaggleReplyType, string> {
-			{ HaggleReplyType.VeryHigh, "Hohohoho! Much obliged t' ye!" },
-			{ HaggleReplyType.High, "Pleasure doin' business wit' ye!" },
-			{ HaggleReplyType.Good, "'Tis acceptable." },
-			{ HaggleReplyType.Low, "Arrr! No good! I be takin' what you got, but ye best nah be as stingy th' next time." },
-			{ HaggleReplyType.TooLow, "Scupper that! 'Tis an insult jus' t' look at. I suppose'n we jus' take our due th' hard way, then. Unhand yer booty." },
+		public static IDictionary<HaggleAmount, string> OfferReplies { get; } = new Dictionary<HaggleAmount, string> {
+			{ HaggleAmount.VeryHigh, "Hohohoho! Much obliged t' ye!" },
+			{ HaggleAmount.High, "Pleasure doin' business wit' ye!" },
+			{ HaggleAmount.Good, "'Tis acceptable." },
+			{ HaggleAmount.Low, "Arrr! No good! I be takin' what you got, but ye best nah be as stingy th' next time." },
+			{ HaggleAmount.TooLow, "Scupper that! 'Tis an insult jus' t' look at. I suppose'n we jus' take our due th' hard way, then. Unhand yer booty." },
 			//{ HaggleReplyType.TooLow, "No sense o' charity? Mayhaps we take some o' the burden off o' ye. Unhand yer booty." },
 		};
 	}

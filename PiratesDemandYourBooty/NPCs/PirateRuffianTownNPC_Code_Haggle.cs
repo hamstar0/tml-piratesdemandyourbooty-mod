@@ -10,8 +10,7 @@ using static Terraria.ModLoader.ModContent;
 namespace PiratesDemandYourBooty.NPCs {
 	public partial class PirateRuffianTownNPC : ModNPC {
 		public static void AllDealingsFinished( Player player, long offerAmount, bool sync ) {
-			PDYBWorld.HaggleLogic.GiveFinalOffer( offerAmount );
-			player.BuyItem( (int)offerAmount );
+			PDYBWorld.HaggleLogic.GiveFinalOffer( player, offerAmount );
 
 			// Remove ALL pirate ruffians!
 			int pirateType = NPCType<PirateRuffianTownNPC>();
@@ -49,10 +48,10 @@ namespace PiratesDemandYourBooty.NPCs {
 			if( !this.OfferTested ) {
 				this.OfferTested = true;
 
-				HaggleReplyType replyType = PDYBWorld.HaggleLogic.GaugeOffer( offerAmount );
+				HaggleAmount replyType = PDYBWorld.HaggleLogic.GaugeOffer( offerAmount );
 				Main.npcChatText = PirateRuffianTownNPC.HaggleReplies[replyType];
 			} else {
-				HaggleReplyType replyType = PDYBWorld.HaggleLogic.GaugeOffer( offerAmount );
+				HaggleAmount replyType = PDYBWorld.HaggleLogic.GaugeOffer( offerAmount );
 				Main.npcChatText = PirateRuffianTownNPC.OfferReplies[ replyType ];
 
 				this.OfferAmount = offerAmount;

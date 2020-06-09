@@ -1,4 +1,5 @@
 v1
+-	Implement pirate "exit" fx
 -	Implement 'Pirate Ambusher'
 	-	@Plan
 		-	When far away from the player, teleports near them, springing out of the ground
@@ -8,9 +9,9 @@ v1
 		-	Pirates have 1/2 hp, 1/2 armor, and 3/4 damage
 		-	Pirates drop no loot except coins, and less of their usual amount
 		-	'Pirate Ambusher' now spawns, but no Flying Dutchman
--	Implement pirate exit
-
 -	Implement "haggling"
+	-	Implement on return mood state
+
 	-	Implement responses
 		-	Lock player item use while haggling
 		-	Implement final haggle reply

@@ -11,7 +11,7 @@ namespace PiratesDemandYourBooty {
 		Menacing
 	}
 
-	public enum HaggleReplyType {
+	public enum HaggleAmount {
 		VeryHigh,
 		High,
 		Good,
@@ -51,6 +51,13 @@ namespace PiratesDemandYourBooty {
 
 		public void NetReceive( BinaryReader reader ) {
 			this.PirateDemand = reader.ReadInt64();
+		}
+
+
+		////////////////
+
+		public void BeginInvasion( Player player ) {
+
 		}
 	}
 }
