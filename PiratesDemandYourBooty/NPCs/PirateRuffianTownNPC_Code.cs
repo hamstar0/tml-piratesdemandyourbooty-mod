@@ -9,7 +9,7 @@ using static Terraria.ModLoader.ModContent;
 namespace PiratesDemandYourBooty.NPCs {
 	[AutoloadHead]
 	public partial class PirateRuffianTownNPC : ModNPC {
-		public static NPC GetNearbyPirate( Player player ) {
+		public static NPC GetNearbyPirateNPC( Player player ) {
 			for( int i = 0; i < Main.npc.Length; i++ ) {
 				NPC npc = Main.npc[i];
 				if( npc == null || !npc.active || npc.type != NPCType<PirateRuffianTownNPC>() ) {
@@ -28,6 +28,8 @@ namespace PiratesDemandYourBooty.NPCs {
 		////////////////
 
 		private bool HasFirstChat = false;
+
+		private int HaggleAttempts = 0;
 
 
 		////////////////

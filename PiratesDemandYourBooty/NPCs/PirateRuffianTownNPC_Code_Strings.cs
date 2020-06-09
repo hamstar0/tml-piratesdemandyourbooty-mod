@@ -6,34 +6,15 @@ using static Terraria.ModLoader.ModContent;
 
 
 namespace PiratesDemandYourBooty.NPCs {
-	public enum DemandType {
-		Normal,
-		Impatient,
-		Menacing
-	}
-
-	public enum NegotiationReplyType {
-		VeryHigh,
-		High,
-		Good,
-		Low,
-		TooLow
-	}
-
-
-
-
 	public partial class PirateRuffianTownNPC : ModNPC {
 		public static IReadOnlyList<string> Names { get; private set; } = new List<string> {
 			"Gillard",
-			"Johnney",
+			"Jon",
 			"Kilsome",
 			"Roger",
 			"Rodney",
 			"Crabbe",
 			"Turgut",
-			"Klaus",
-			"Axe",
 			"Bouff",
 			"Nutt",
 			"Morgan",
@@ -97,23 +78,32 @@ namespace PiratesDemandYourBooty.NPCs {
 		};
 
 
-		public static IDictionary<NegotiationReplyType, string[]> NegotiationReplies { get; } = new Dictionary<NegotiationReplyType, string[]> {
-			{ NegotiationReplyType.VeryHigh, new string[] {
+		public static IDictionary<HaggleReplyType, string[]> HaggleReplies { get; } = new Dictionary<HaggleReplyType, string[]> {
+			{ HaggleReplyType.VeryHigh, new string[] {
 				"Shiver me t... er, ye gots the right idea, laddy. Ehehehe!"
 			} },
-			{ NegotiationReplyType.High, new string[] {
+			{ HaggleReplyType.High, new string[] {
 				"*strokes chin*"
 			} },
-			{ NegotiationReplyType.Good, new string[] {
+			{ HaggleReplyType.Good, new string[] {
 				"..."
 			} },
-			{ NegotiationReplyType.Low, new string[] {
+			{ HaggleReplyType.Low, new string[] {
 				"What do I looks like to ye, a street corner wretch?! Ye should plumb yer pock... er, heart fer moren' jus' spare change."
 			} },
-			{ NegotiationReplyType.TooLow, new string[] {
+			{ HaggleReplyType.TooLow, new string[] {
 				"Yar har har har HAR! Ye've gots a sense o' humor, ye do!",
 				"Scupper that! 'Tis an insult just to look at. I be done with ye, now. I be seein' ye again real soon..."
 			} },
+		};
+
+
+		public static IDictionary<HaggleReplyType, string> OfferReplies { get; } = new Dictionary<HaggleReplyType, string> {
+			{ HaggleReplyType.VeryHigh, "Hohohoho! Much obliged t' ye!" },
+			{ HaggleReplyType.High, "Pleasure doin' business wit' ye!" },
+			{ HaggleReplyType.Good, "'Tis acceptable." },
+			{ HaggleReplyType.Low, "Arrr! No good! I be takin' what you got, but ye best nah be as stingy th' next time." },
+			{ HaggleReplyType.TooLow, "No sense o' charity be wit' ye? Mayhaps we take some o' the burden off o' ye. Unhand yer booty." },
 		};
 	}
 }

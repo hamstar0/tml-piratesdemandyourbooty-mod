@@ -33,11 +33,11 @@ namespace PiratesDemandYourBooty.NetProtocols {
 		////////////////
 
 		protected override void ReceiveOnClient() {
-			PDYBWorld.HaggleLogic.ReceiveReplyForPirate( this.Reply );
+			PDYBWorld.HaggleLogic.GiveFinalOffer( this.Reply );
 		}
 
 		protected override void ReceiveOnServer( int fromWho ) {
-			PDYBWorld.HaggleLogic.ReceiveReplyForPirate( this.Reply );
+			PDYBWorld.HaggleLogic.GiveFinalOffer( this.Reply );
 		}
 	}
 }

@@ -77,7 +77,7 @@ namespace PiratesDemandYourBooty.UI {
 			bool isHaggling = !plr.dead
 				&& !Main.playerInventory
 				&& !plr.CCed
-				&& PirateRuffianTownNPC.GetNearbyPirate( plr ) != null;
+				&& PirateRuffianTownNPC.GetNearbyPirateNPC( plr ) != null;
 
 			if( isHaggling ) {
 				plr.noItems = true;

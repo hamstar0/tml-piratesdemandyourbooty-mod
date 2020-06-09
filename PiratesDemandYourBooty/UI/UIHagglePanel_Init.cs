@@ -53,11 +53,7 @@ namespace PiratesDemandYourBooty.UI {
 			offerBut.Left.Set( 0f, 0f );
 			offerBut.Top.Set( yOffset, 0f );
 			offerBut.OnClick += ( _, __ ) => {
-				if( logic.ReceiveReplyForPirate(this.Value) ) {
-					this.Close();
-				} else {
-					this.Reset();
-				}
+				this.MakeOffer();
 			};
 
 			string unit = HaggleLogic.GetHighestCoinTypeOfGivenDemand( logic.PirateDemand, out bool tensOf );

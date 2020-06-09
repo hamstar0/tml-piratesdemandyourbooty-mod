@@ -11,8 +11,9 @@ v1
 -	Implement "haggling"
 	-	Implement responses
 		-	Lock player items while haggling
-		-	Implement one-time haggle reply
+		-	Implement final haggle reply
 
+		-	Implement one-time haggle reply
 		-	Fix inputs
 		-	Revise dialog to indicate "ballpark demand range"
 		-	@Plan
