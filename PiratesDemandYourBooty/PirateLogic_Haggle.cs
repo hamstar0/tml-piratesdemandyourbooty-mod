@@ -5,7 +5,7 @@ using HamstarHelpers.Helpers.Items;
 
 
 namespace PiratesDemandYourBooty {
-	partial class HaggleLogic {
+	partial class PirateLogic {
 		public static string GetHighestCoinTypeOfGivenDemand( long demand, out bool tensOf ) {
 			int baseLog10 = (int)Math.Log10( demand );
 			//int baseLog100 = (int)(Math.Log10( demand ) * 0.5d);

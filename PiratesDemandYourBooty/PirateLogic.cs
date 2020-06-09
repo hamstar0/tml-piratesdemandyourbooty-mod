@@ -22,7 +22,7 @@ namespace PiratesDemandYourBooty {
 
 
 
-	partial class HaggleLogic {
+	partial class PirateLogic {
 		public long PirateDemand { get; private set; } = 10 * 100 * 100;    // 10 gold, initially
 
 		public PirateMood Patience { get; private set; } = PirateMood.Normal;
@@ -38,32 +38,29 @@ namespace PiratesDemandYourBooty {
 		////////////////
 
 		public void Load( TagCompound tag ) {
-			if( !tag.ContainsKey( "PirateDemand" ) ) {
-				return;
+			if( tag.ContainsKey( "PirateDemand" ) ) {
+				this.PirateDemand = tag.GetLong( "PirateDemand" );
 			}
-
-			this.PirateDemand = tag.GetLong( "PirateDemand" );
+			if( tag.ContainsKey( "PirateInvasionTicks" ) ) {
+				this.InvasionDurationTicks = tag.GetLong( "PirateInvasionTicks" );
+			}
 		}
 
 		public void Save( TagCompound tag ) {
-			tag["PirateDemand"] = this.PirateDemand;
+			tag["PirateDemand"] = (long)this.PirateDemand;
+			tag["PirateInvasionTicks"] = (long)this.InvasionDurationTicks;
 		}
 
 		////
 
 		public void NetSend( BinaryWriter writer ) {
-			writer.Write( this.PirateDemand );
+			writer.Write( (long)this.PirateDemand );
+			writer.Write( (long)this.InvasionDurationTicks );
 		}
 
 		public void NetReceive( BinaryReader reader ) {
 			this.PirateDemand = reader.ReadInt64();
-		}
-
-
-		////////////////
-
-		public void BeginInvasion( Player player ) {
-			this.InvasionDurationTicks = PDYBConfig.Instance.InvasionDurationTicks;
+			this.InvasionDurationTicks = reader.ReadInt64();
 		}
 	}
 }

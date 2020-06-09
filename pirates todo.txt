@@ -8,6 +8,7 @@ v1
 	-	Stop pirates from dropping loot items (except coins)
 	-	Modify pirate stats
 	-	Spawn pirates from pool when player is near a town
+	-	Implement invasion duration
 
 	-	@Plan
 		-	When a player gets near a town house, spawn pirates as if an invasion

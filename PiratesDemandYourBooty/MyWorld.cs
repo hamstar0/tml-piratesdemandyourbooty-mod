@@ -7,25 +7,25 @@ using static Terraria.ModLoader.ModContent;
 
 namespace PiratesDemandYourBooty {
 	class PDYBWorld : ModWorld {
-		public static HaggleLogic HaggleLogic => GetInstance<PDYBWorld>().HaggleLogicInstance;
+		public static PirateLogic PirateLogic => GetInstance<PDYBWorld>().PirateLogicInstance;
 
 
 
 		////////////////
 
-		private HaggleLogic HaggleLogicInstance = new HaggleLogic();
+		private PirateLogic PirateLogicInstance = new PirateLogic();
 
 
 
 		////////////////
 
 		public override void Load( TagCompound tag ) {
-			this.HaggleLogicInstance.Load( tag );
+			this.PirateLogicInstance.Load( tag );
 		}
 
 		public override TagCompound Save() {
 			var tag = new TagCompound();
-			this.HaggleLogicInstance.Save( tag );
+			this.PirateLogicInstance.Save( tag );
 			return tag;
 		}
 
@@ -33,13 +33,13 @@ namespace PiratesDemandYourBooty {
 
 		public override void NetSend( BinaryWriter writer ) {
 			try {
-				this.HaggleLogicInstance.NetSend( writer );
+				this.PirateLogicInstance.NetSend( writer );
 			} catch { }
 		}
 
 		public override void NetReceive( BinaryReader reader ) {
 			try {
-				this.HaggleLogicInstance.NetReceive( reader );
+				this.PirateLogicInstance.NetReceive( reader );
 			} catch { }
 		}
 	}
