@@ -4,12 +4,13 @@ v1
 	-	@Plan
 		-	When far away from the player, teleports near them, springing out of the ground
 -	Implement town NPC respawn conditions
+-	Implement town NPC duration
+
 -	Implement invasion
 	-	Stop pirates from dropping loot items (except coins)
 	-	Modify pirate stats
 	-	Spawn pirates from pool when player is near a town
 	-	Implement invasion duration
-
 	-	@Plan
 		-	When a player gets near a town house, spawn pirates as if an invasion
 		-	Pirates have 1/2 hp, 1/2 armor, and 3/4 damage

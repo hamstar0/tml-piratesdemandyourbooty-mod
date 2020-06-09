@@ -75,12 +75,12 @@ namespace PiratesDemandYourBooty {
 					break;
 				case PirateMood.Menacing:
 					this.Patience = PirateMood.Normal;
-					this.BeginInvasion( player );
+					this.BeginInvasion();
 					break;
 				}
 				break;
 			case HaggleAmount.TooLow:
-				this.BeginInvasion( player );
+				this.BeginInvasion();
 				break;
 			}
 		}
