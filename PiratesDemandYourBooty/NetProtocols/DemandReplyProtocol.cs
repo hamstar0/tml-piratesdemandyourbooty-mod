@@ -21,6 +21,18 @@ namespace PiratesDemandYourBooty.NetProtocols {
 			protocol.SendToServer( true );
 		}
 
+		public static void BroadcastFromServer( long offerAmount ) {
+			if( Main.netMode != NetmodeID.Server ) {
+				throw new ModHelpersException( "Not server" );
+			}
+
+			var protocol = new DemandReplyProtocol {
+				WhoAmI = -1,
+				OfferAmount = offerAmount
+			};
+			protocol.SendToClient( -1, -1 );
+		}
+
 
 
 		////////////////

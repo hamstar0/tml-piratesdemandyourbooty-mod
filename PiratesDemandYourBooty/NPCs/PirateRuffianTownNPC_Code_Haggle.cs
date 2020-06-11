@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using HamstarHelpers.Helpers.NPCs;
+using HamstarHelpers.Helpers.DotNET;
 using PiratesDemandYourBooty.NetProtocols;
 using static Terraria.ModLoader.ModContent;
 
@@ -12,25 +14,28 @@ namespace PiratesDemandYourBooty.NPCs {
 		public static void AllDealingsFinished( Player player, long offerAmount, bool sync ) {
 			var logic = PirateLogic.Instance;
 
-			logic.GiveFinalOffer( player, offerAmount );
-			logic.SetPirateNegotiatorArrivalTime( logic.IsInvading );
-
-			// Remove ALL pirate ruffians!
-			int pirateType = NPCType<PirateRuffianTownNPC>();
-			foreach( NPC npc in Main.npc ) {
-				if( !npc.active && npc.type != pirateType ) { continue; }
-
-				if( sync ) {
-					NPCHelpers.Remove( npc );
-				} else {
-					npc.active = false;
-				}
-
-				// TODO: Poof!
+			if( player != null && offerAmount > 0 ) {
+				logic.GiveFinalOffer( player, offerAmount );
+			} else {
+				logic.GiveNoOffer();
 			}
 
-			if( sync && Main.netMode == NetmodeID.MultiplayerClient ) {
-				DemandReplyProtocol.BroadcastFromClient( offerAmount );
+			logic.SetNegotiatorArrivalTime( logic.IsInvading );
+
+			int negotType = NPCType<PirateRuffianTownNPC>();
+			IEnumerable<NPC> negotiator = Main.npc.SafeWhere( n => n?.active == true && n.type == negotType );
+
+			// Remove negotiator(s)
+			foreach( NPC npc in negotiator ) {
+				PirateRuffianTownNPC.Exit( npc, sync );
+			}
+
+			if( sync ) {
+				if( Main.netMode == NetmodeID.MultiplayerClient ) {
+					DemandReplyProtocol.BroadcastFromClient( offerAmount );
+				} else if( Main.netMode == NetmodeID.Server ) {
+					DemandReplyProtocol.BroadcastFromServer( offerAmount );
+				}
 			}
 		}
 

@@ -54,6 +54,11 @@ namespace PiratesDemandYourBooty {
 
 		////////////////
 
+		public void GiveNoOffer() {
+			this.BeginInvasion();
+		}
+			
+
 		public void GiveFinalOffer( Player player, long offerAmount ) {
 			HaggleAmount measure = this.GaugeOffer( offerAmount );
 

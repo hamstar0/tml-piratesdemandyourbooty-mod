@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using HamstarHelpers.Helpers.NPCs;
 using static Terraria.ModLoader.ModContent;
 
 
@@ -21,6 +22,17 @@ namespace PiratesDemandYourBooty.NPCs {
 				}
 			}
 			return null;
+		}
+
+
+		public static void Exit( NPC npc, bool sync ) {
+			if( sync ) {
+				NPCHelpers.Remove( npc );
+			} else {
+				npc.active = false;
+			}
+
+			// TODO: Poof!
 		}
 
 
@@ -96,7 +108,7 @@ namespace PiratesDemandYourBooty.NPCs {
 				return false;
 			}
 
-			return logic.CanPirateNegotiatorMoveIn();
+			return logic.CanNegotiatorMoveIn();
 		}
 
 		////////////////

@@ -31,6 +31,11 @@ namespace PiratesDemandYourBooty {
 
 		////////////////
 
+		private bool WasDaySinceLastCheck = true;
+
+
+		////////////////
+
 		public long PirateDemand { get; private set; } = 10 * 100 * 100;    // 10 gold, initially
 
 		public PirateMood Patience { get; private set; } = PirateMood.Normal;
@@ -91,7 +96,7 @@ namespace PiratesDemandYourBooty {
 		////////////////
 		
 		internal void Update() {
-			this.UpdateTownNPCArrival();
+			this.UpdateForNegotiator();
 		}
 	}
 }

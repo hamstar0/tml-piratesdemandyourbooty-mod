@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Linq;
+using Terraria;
+using Terraria.ID;
+using PiratesDemandYourBooty.NPCs;
 using static Terraria.ModLoader.ModContent;
 
 
 namespace PiratesDemandYourBooty {
 	partial class PirateLogic {
-		public void SetPirateNegotiatorArrivalTime( bool postInvasion ) {
+		public void SetNegotiatorArrivalTime( bool postInvasion ) {
 			var config = PDYBConfig.Instance;
 
 			this.TicksSinceLastArrival = 0;
@@ -16,7 +20,7 @@ namespace PiratesDemandYourBooty {
 		}
 
 
-		public bool CanPirateNegotiatorMoveIn() {
+		public bool CanNegotiatorMoveIn() {
 			if( this.TicksSinceLastArrival > this.TicksUntilNextArrival ) {
 				return true;
 			}
@@ -26,9 +30,33 @@ namespace PiratesDemandYourBooty {
 
 
 		////////////////
+		
+		public void CheckNegotiatorTimeUp() {
+			int negotType = NPCType<PirateRuffianTownNPC>();
+			NPC negotiator = Main.npc.FirstOrDefault( n => n?.active == true && n.type == negotType );
+			if( negotiator == null ) {
+				return;
+			}
 
-		private void UpdateTownNPCArrival() {
-			if( !this.IsInvading ) {
+			PirateRuffianTownNPC.AllDealingsFinished( null, 0, true );
+		}
+
+
+		////////////////
+
+		private void UpdateForNegotiator() {
+			if( Main.netMode != NetmodeID.MultiplayerClient ) {
+				if( this.WasDaySinceLastCheck != Main.dayTime ) {
+					this.WasDaySinceLastCheck = Main.dayTime;
+					if( Main.dayTime ) {    // morning
+						this.CheckNegotiatorTimeUp();
+					}
+				}
+			}
+
+			if( this.IsInvading ) {
+				this.InvasionDurationTicks++;
+			} else {
 				this.TicksSinceLastArrival++;
 			}
 		}
