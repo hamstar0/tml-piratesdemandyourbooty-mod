@@ -52,14 +52,14 @@ namespace PiratesDemandYourBooty.NPCs {
 
 		////
 
-		public override string Texture => "PiratesDemandYourBooty/NPCs/PirateRuffianTownNPC";
+		public override string Texture => "PiratesDemandYourBooty/NPCs/PirateNegotiatorTownNPC";
 
 
 
 		////////////////
 
 		public override bool Autoload( ref string name ) {
-			name = "Pirate Ruffian";
+			name = "Pirate Negotiator";
 			return this.mod.Properties.Autoload;
 		}
 
