@@ -4,8 +4,15 @@ using static Terraria.ModLoader.ModContent;
 
 namespace PiratesDemandYourBooty {
 	partial class PirateLogic {
-		public void SetPirateNegotiatorArrivalTime() {
-			f
+		public void SetPirateNegotiatorArrivalTime( bool postInvasion ) {
+			var config = PDYBConfig.Instance;
+
+			this.TicksSinceLastArrival = 0;
+			this.TicksUntilNextArrival = config.NegotiatorMinimumTicksUntilReturn;
+
+			if( postInvasion ) {
+				this.TicksUntilNextArrival += config.NegotiatorAddedTicksUntilReturnAfterRaid;
+			}
 		}
 
 
@@ -21,7 +28,9 @@ namespace PiratesDemandYourBooty {
 		////////////////
 
 		private void UpdateTownNPCArrival() {
-			this.TicksSinceLastArrival++;
+			if( !this.IsInvading ) {
+				this.TicksSinceLastArrival++;
+			}
 		}
 	}
 }

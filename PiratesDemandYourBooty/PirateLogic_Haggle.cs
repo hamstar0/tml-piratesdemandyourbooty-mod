@@ -93,7 +93,7 @@ namespace PiratesDemandYourBooty {
 			}
 
 			int[] itemWhos = ItemHelpers.CreateCoins(
-				amount: (long)( (double)offerAmount * PDYBConfig.Instance.PirateInterestPercent ),
+				amount: (long)( (double)offerAmount * PDYBConfig.Instance.NegotiatorInterestPercent ),
 				position: player.Center
 			);
 

@@ -85,10 +85,10 @@ namespace PiratesDemandYourBooty.NPCs {
 			if( logic.IsInvading ) {
 				return false;
 			}
-			if( numTownNPCs < PDYBConfig.Instance.MinimumTownNPCsForArrival ) {
+			if( numTownNPCs < PDYBConfig.Instance.NegotiatorMinimumTownNPCsForArrival ) {
 				return false;
 			}
-			if( money < PDYBConfig.Instance.MinimumMoneyForArrival ) {
+			if( money < PDYBConfig.Instance.NegotiatorMinimumMoneyForArrival ) {
 				return false;
 			}
 			// First 5 "minutes" of day time

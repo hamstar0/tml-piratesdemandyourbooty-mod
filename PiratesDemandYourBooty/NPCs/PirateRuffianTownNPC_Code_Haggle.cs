@@ -13,7 +13,7 @@ namespace PiratesDemandYourBooty.NPCs {
 			var logic = PirateLogic.Instance;
 
 			logic.GiveFinalOffer( player, offerAmount );
-			logic.SetPirateNegotiatorArrivalTime();
+			logic.SetPirateNegotiatorArrivalTime( logic.IsInvading );
 
 			// Remove ALL pirate ruffians!
 			int pirateType = NPCType<PirateRuffianTownNPC>();
