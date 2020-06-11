@@ -10,7 +10,7 @@ namespace PiratesDemandYourBooty.NPCs {
 			if( !this.HasFirstChat ) {
 				this.HasFirstChat = true;
 
-				PirateMood patience = PDYBWorld.PirateLogic.Patience;
+				PirateMood patience = PirateLogic.Instance.Patience;
 				return PirateRuffianTownNPC.Demands[ patience ];
 			}
 
@@ -36,7 +36,7 @@ namespace PiratesDemandYourBooty.NPCs {
 			}
 
 			if( firstButton ) {
-				PirateMood patience = PDYBWorld.PirateLogic.Patience;
+				PirateMood patience = PirateLogic.Instance.Patience;
 				Main.npcChatText = PirateRuffianTownNPC.Demands[ patience ];
 			} else {
 				PDYBMod.Instance.UIContextComponents.OpenHaggleUI();

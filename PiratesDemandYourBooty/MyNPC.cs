@@ -24,7 +24,7 @@ namespace PiratesDemandYourBooty {
 			if( Main.hardMode ) {
 				return;
 			}
-			if( !PDYBWorld.PirateLogic.IsInvading ) {
+			if( !PirateLogic.Instance.IsInvading ) {
 				return;
 			}
 
@@ -48,7 +48,7 @@ namespace PiratesDemandYourBooty {
 		////////////////
 
 		public override void EditSpawnPool( IDictionary<int, float> pool, NPCSpawnInfo spawnInfo ) {
-			if( !PDYBWorld.PirateLogic.IsInvading ) {
+			if( !PirateLogic.Instance.IsInvading ) {
 				return;
 			}
 			if( !spawnInfo.playerInTown ) {
@@ -69,7 +69,7 @@ namespace PiratesDemandYourBooty {
 
 
 		////////////////
-
+		
 		public override bool PreNPCLoot( NPC npc ) {
 			if( this.IsRaider ) {
 				if( Main.netMode != NetmodeID.MultiplayerClient ) {

@@ -80,7 +80,23 @@ namespace PiratesDemandYourBooty.NPCs {
 		////////////////
 
 		public override bool CanTownNPCSpawn( int numTownNPCs, int money ) {
-			return true;
+			var logic = PirateLogic.Instance;
+
+			if( logic.IsInvading ) {
+				return false;
+			}
+			if( numTownNPCs < PDYBConfig.Instance.MinimumTownNPCsForArrival ) {
+				return false;
+			}
+			if( money < PDYBConfig.Instance.MinimumMoneyForArrival ) {
+				return false;
+			}
+			// First 5 "minutes" of day time
+			if( !Main.dayTime || Main.time > (5 * 60 * 60) ) {
+				return false;
+			}
+
+			return logic.CanPirateNegotiatorMoveIn();
 		}
 
 		////////////////

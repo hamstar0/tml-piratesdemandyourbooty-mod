@@ -29,5 +29,12 @@ namespace PiratesDemandYourBooty {
 
 		[DefaultValue( 60 * 60 * 15 )]
 		public long InvasionDurationTicks { get; set; } = 60 * 60 * 15;
+
+		
+		[DefaultValue( 4 )]
+		public int MinimumTownNPCsForArrival { get; set; } = 4;
+
+		[DefaultValue( 100 )]
+		public int MinimumMoneyForArrival { get; set; } = 100;
 	}
 }

@@ -2,6 +2,8 @@
 using System.IO;
 using Terraria;
 using Terraria.ModLoader.IO;
+using HamstarHelpers.Helpers.Debug;
+using static Terraria.ModLoader.ModContent;
 
 
 namespace PiratesDemandYourBooty {
@@ -23,11 +25,21 @@ namespace PiratesDemandYourBooty {
 
 
 	partial class PirateLogic {
+		public static PirateLogic Instance => PDYBWorld.PirateLogic;
+
+
+
+		////////////////
+
 		public long PirateDemand { get; private set; } = 10 * 100 * 100;    // 10 gold, initially
 
 		public PirateMood Patience { get; private set; } = PirateMood.Normal;
 
 		public long InvasionDurationTicks { get; private set; } = 0;
+
+		public long TicksSinceLastArrival { get; private set; } = 0;
+
+		public long TicksUntilNextArrival { get; private set; } = 0;
 
 		////
 
@@ -38,29 +50,48 @@ namespace PiratesDemandYourBooty {
 		////////////////
 
 		public void Load( TagCompound tag ) {
-			if( tag.ContainsKey( "PirateDemand" ) ) {
+			if( tag.ContainsKey("PirateDemand") ) {
 				this.PirateDemand = tag.GetLong( "PirateDemand" );
 			}
-			if( tag.ContainsKey( "PirateInvasionTicks" ) ) {
+			if( tag.ContainsKey("PirateInvasionTicks") ) {
 				this.InvasionDurationTicks = tag.GetLong( "PirateInvasionTicks" );
+			}
+			if( tag.ContainsKey("TicksSinceLastArrival") ) {
+				this.TicksSinceLastArrival = tag.GetLong( "TicksSinceLastArrival" );
+			}
+			if( tag.ContainsKey("TicksUntilNextArrival") ) {
+				this.TicksUntilNextArrival = tag.GetLong( "TicksUntilNextArrival" );
 			}
 		}
 
 		public void Save( TagCompound tag ) {
 			tag["PirateDemand"] = (long)this.PirateDemand;
 			tag["PirateInvasionTicks"] = (long)this.InvasionDurationTicks;
+			tag["TicksSinceLastArrival"] = (long)this.TicksSinceLastArrival;
+			tag["TicksUntilNextArrival"] = (long)this.TicksUntilNextArrival;
 		}
 
 		////
-
+		
 		public void NetSend( BinaryWriter writer ) {
 			writer.Write( (long)this.PirateDemand );
 			writer.Write( (long)this.InvasionDurationTicks );
+			writer.Write( (long)this.TicksSinceLastArrival );
+			writer.Write( (long)this.TicksUntilNextArrival );
 		}
 
 		public void NetReceive( BinaryReader reader ) {
 			this.PirateDemand = reader.ReadInt64();
 			this.InvasionDurationTicks = reader.ReadInt64();
+			this.TicksSinceLastArrival = reader.ReadInt64();
+			this.TicksUntilNextArrival = reader.ReadInt64();
+		}
+
+
+		////////////////
+		
+		internal void Update() {
+			this.UpdateTownNPCArrival();
 		}
 	}
 }

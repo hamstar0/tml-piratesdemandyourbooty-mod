@@ -43,5 +43,12 @@ namespace PiratesDemandYourBooty {
 		public override void Unload() {
 			PDYBMod.Instance = null;
 		}
+
+
+		////////////////
+
+		public override void PostUpdateEverything() {
+			PirateLogic.Instance.Update();
+		}
 	}
 }
