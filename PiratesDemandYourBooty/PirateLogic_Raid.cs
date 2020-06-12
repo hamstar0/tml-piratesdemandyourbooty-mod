@@ -8,13 +8,13 @@ using HamstarHelpers.Helpers.DotNET;
 
 namespace PiratesDemandYourBooty {
 	partial class PirateLogic {
-		public void BeginInvasion() {
-			this.InvasionDurationTicks = PDYBConfig.Instance.RaidDurationTicks;
+		public void BeginRaid() {
+			this.RaidDurationTicks = PDYBConfig.Instance.RaidDurationTicks;
 
-			Main.NewText( "Pirates are invading your town!", new Color(175, 75, 255) );
+			Main.NewText( "Pirates are raiding your town!", new Color(175, 75, 255) );
 		}
 
-		public void EndInvasion() {
+		public void EndRaid() {
 			this.KillsNearTownNPC.Clear();
 		}
 
@@ -70,11 +70,11 @@ namespace PiratesDemandYourBooty {
 
 		////////////////
 
-		private void UpdateForInvasion() {
+		private void UpdateForRaid() {
 			this.TownNPCs = Main.npc.SafeWhere( n => n.active == true && n.townNPC ).ToList();
 
 			if( this.TownNPCs.Count == 0 ) {
-				this.EndInvasion();
+				this.EndRaid();
 			}
 		}
 	}

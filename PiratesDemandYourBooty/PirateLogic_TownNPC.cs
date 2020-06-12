@@ -54,8 +54,8 @@ namespace PiratesDemandYourBooty {
 				}
 			}
 
-			if( this.IsInvading ) {
-				this.InvasionDurationTicks++;
+			if( this.IsRaiding ) {
+				this.RaidDurationTicks++;
 			} else {
 				this.TicksSinceLastArrival++;
 			}

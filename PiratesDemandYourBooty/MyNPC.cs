@@ -25,7 +25,7 @@ namespace PiratesDemandYourBooty {
 			if( Main.hardMode ) {
 				return;
 			}
-			if( !PirateLogic.Instance.IsInvading ) {
+			if( !PirateLogic.Instance.IsRaiding ) {
 				return;
 			}
 
@@ -51,7 +51,7 @@ namespace PiratesDemandYourBooty {
 		public override void EditSpawnPool( IDictionary<int, float> pool, NPCSpawnInfo spawnInfo ) {
 			var logic = PirateLogic.Instance;
 
-			if( !PirateLogic.Instance.IsInvading ) {
+			if( !PirateLogic.Instance.IsRaiding ) {
 				return;
 			}
 			if( !spawnInfo.playerInTown ) {

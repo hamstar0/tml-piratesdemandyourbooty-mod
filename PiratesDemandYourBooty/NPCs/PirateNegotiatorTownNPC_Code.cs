@@ -96,7 +96,7 @@ namespace PiratesDemandYourBooty.NPCs {
 		public override bool CanTownNPCSpawn( int numTownNPCs, int money ) {
 			var logic = PirateLogic.Instance;
 
-			if( logic.IsInvading ) {
+			if( logic.IsRaiding ) {
 				return false;
 			}
 			if( numTownNPCs < PDYBConfig.Instance.NegotiatorMinimumTownNPCsForArrival ) {

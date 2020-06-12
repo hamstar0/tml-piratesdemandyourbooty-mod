@@ -52,7 +52,7 @@ namespace PiratesDemandYourBooty {
 		////////////////
 
 		public void GiveNoOffer( bool sync ) {
-			this.BeginInvasion();
+			this.BeginRaid();
 		}
 			
 
@@ -77,12 +77,12 @@ namespace PiratesDemandYourBooty {
 					break;
 				case PirateMood.Menacing:
 					this.Patience = PirateMood.Normal;
-					this.BeginInvasion();
+					this.BeginRaid();
 					break;
 				}
 				break;
 			case HaggleAmount.TooLow:
-				this.BeginInvasion();
+				this.BeginRaid();
 				break;
 			}
 		}

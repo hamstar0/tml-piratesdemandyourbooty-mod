@@ -19,7 +19,7 @@ namespace PiratesDemandYourBooty.NPCs {
 				logic.GiveNoOffer( sync );
 			}
 
-			logic.SetNegotiatorArrivalTime( logic.IsInvading );
+			logic.SetNegotiatorArrivalTime( logic.IsRaiding );
 
 			int negotType = NPCType<PirateNegotiatorTownNPC>();
 			IEnumerable<NPC> negotiator = Main.npc.SafeWhere( n => n?.active == true && n.type == negotType );

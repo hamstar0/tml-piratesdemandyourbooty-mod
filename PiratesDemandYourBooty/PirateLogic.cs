@@ -46,7 +46,7 @@ namespace PiratesDemandYourBooty {
 
 		public PirateMood Patience { get; private set; } = PirateMood.Normal;
 
-		public long InvasionDurationTicks { get; private set; } = 0;
+		public long RaidDurationTicks { get; private set; } = 0;
 
 		public long TicksSinceLastArrival { get; private set; } = 0;
 
@@ -54,7 +54,7 @@ namespace PiratesDemandYourBooty {
 
 		////
 
-		public bool IsInvading => this.InvasionDurationTicks > 0;
+		public bool IsRaiding => this.RaidDurationTicks > 0;
 
 
 
@@ -64,8 +64,8 @@ namespace PiratesDemandYourBooty {
 			if( tag.ContainsKey("PirateDemand") ) {
 				this.PirateDemand = tag.GetLong( "PirateDemand" );
 			}
-			if( tag.ContainsKey("PirateInvasionTicks") ) {
-				this.InvasionDurationTicks = tag.GetLong( "PirateInvasionTicks" );
+			if( tag.ContainsKey("PirateRaidTicks") ) {
+				this.RaidDurationTicks = tag.GetLong( "PirateRaidTicks" );
 			}
 			if( tag.ContainsKey("TicksSinceLastArrival") ) {
 				this.TicksSinceLastArrival = tag.GetLong( "TicksSinceLastArrival" );
@@ -77,7 +77,7 @@ namespace PiratesDemandYourBooty {
 
 		public void Save( TagCompound tag ) {
 			tag["PirateDemand"] = (long)this.PirateDemand;
-			tag["PirateInvasionTicks"] = (long)this.InvasionDurationTicks;
+			tag["PirateRaidTicks"] = (long)this.RaidDurationTicks;
 			tag["TicksSinceLastArrival"] = (long)this.TicksSinceLastArrival;
 			tag["TicksUntilNextArrival"] = (long)this.TicksUntilNextArrival;
 		}
@@ -86,14 +86,14 @@ namespace PiratesDemandYourBooty {
 		
 		public void NetSend( BinaryWriter writer ) {
 			writer.Write( (long)this.PirateDemand );
-			writer.Write( (long)this.InvasionDurationTicks );
+			writer.Write( (long)this.RaidDurationTicks );
 			writer.Write( (long)this.TicksSinceLastArrival );
 			writer.Write( (long)this.TicksUntilNextArrival );
 		}
 
 		public void NetReceive( BinaryReader reader ) {
 			this.PirateDemand = reader.ReadInt64();
-			this.InvasionDurationTicks = reader.ReadInt64();
+			this.RaidDurationTicks = reader.ReadInt64();
 			this.TicksSinceLastArrival = reader.ReadInt64();
 			this.TicksUntilNextArrival = reader.ReadInt64();
 		}
@@ -104,8 +104,8 @@ namespace PiratesDemandYourBooty {
 		internal void Update() {
 			this.UpdateForNegotiator();
 
-			if( this.IsInvading ) {
-				this.UpdateForInvasion();
+			if( this.IsRaiding ) {
+				this.UpdateForRaid();
 			}
 		}
 	}
