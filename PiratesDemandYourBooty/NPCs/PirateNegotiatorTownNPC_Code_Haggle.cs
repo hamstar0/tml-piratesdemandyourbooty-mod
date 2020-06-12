@@ -3,31 +3,30 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using HamstarHelpers.Helpers.NPCs;
 using HamstarHelpers.Helpers.DotNET;
 using PiratesDemandYourBooty.NetProtocols;
 using static Terraria.ModLoader.ModContent;
 
 
 namespace PiratesDemandYourBooty.NPCs {
-	public partial class PirateRuffianTownNPC : ModNPC {
+	public partial class PirateNegotiatorTownNPC : ModNPC {
 		public static void AllDealingsFinished( Player player, long offerAmount, bool sync ) {
 			var logic = PirateLogic.Instance;
 
 			if( player != null && offerAmount > 0 ) {
-				logic.GiveFinalOffer( player, offerAmount );
+				logic.GiveFinalOffer( player, offerAmount, sync );
 			} else {
-				logic.GiveNoOffer();
+				logic.GiveNoOffer( sync );
 			}
 
 			logic.SetNegotiatorArrivalTime( logic.IsInvading );
 
-			int negotType = NPCType<PirateRuffianTownNPC>();
+			int negotType = NPCType<PirateNegotiatorTownNPC>();
 			IEnumerable<NPC> negotiator = Main.npc.SafeWhere( n => n?.active == true && n.type == negotType );
 
 			// Remove negotiator(s)
 			foreach( NPC npc in negotiator ) {
-				PirateRuffianTownNPC.Exit( npc, sync );
+				PirateNegotiatorTownNPC.Exit( npc, sync );
 			}
 
 			if( sync ) {
@@ -45,7 +44,7 @@ namespace PiratesDemandYourBooty.NPCs {
 
 		private void UpdateHaggleState() {
 			if( this.HagglingDone && Main.npcChatText == "" ) {
-				PirateRuffianTownNPC.AllDealingsFinished( Main.LocalPlayer, this.OfferAmount, true );
+				PirateNegotiatorTownNPC.AllDealingsFinished( Main.LocalPlayer, this.OfferAmount, true );
 			}
 		}
 
@@ -53,14 +52,16 @@ namespace PiratesDemandYourBooty.NPCs {
 		////////////////
 
 		public bool GiveOffer( long offerAmount ) {
+			var logic = PirateLogic.Instance;
+
 			if( !this.OfferTested ) {
 				this.OfferTested = true;
 
-				HaggleAmount replyType = PirateLogic.Instance.GaugeOffer( offerAmount );
-				Main.npcChatText = PirateRuffianTownNPC.HaggleReplies[replyType];
+				HaggleAmount replyType = PirateLogic.GaugeOffer( logic.PirateDemand, offerAmount );
+				Main.npcChatText = PirateNegotiatorTownNPC.HaggleReplies[replyType];
 			} else {
-				HaggleAmount replyType = PirateLogic.Instance.GaugeOffer( offerAmount );
-				Main.npcChatText = PirateRuffianTownNPC.OfferReplies[ replyType ];
+				HaggleAmount replyType = PirateLogic.GaugeOffer( logic.PirateDemand, offerAmount );
+				Main.npcChatText = PirateNegotiatorTownNPC.OfferReplies[ replyType ];
 
 				this.OfferAmount = offerAmount;
 			}

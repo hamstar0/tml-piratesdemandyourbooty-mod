@@ -32,13 +32,13 @@ namespace PiratesDemandYourBooty {
 		////////////////
 		
 		public void CheckNegotiatorTimeUp() {
-			int negotType = NPCType<PirateRuffianTownNPC>();
+			int negotType = NPCType<PirateNegotiatorTownNPC>();
 			NPC negotiator = Main.npc.FirstOrDefault( n => n?.active == true && n.type == negotType );
 			if( negotiator == null ) {
 				return;
 			}
 
-			PirateRuffianTownNPC.AllDealingsFinished( null, 0, true );
+			PirateNegotiatorTownNPC.AllDealingsFinished( null, 0, true );
 		}
 
 

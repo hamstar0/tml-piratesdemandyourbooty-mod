@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Collections.Generic;
+using System.Collections.Concurrent;
 using Terraria;
 using Terraria.ModLoader.IO;
 using HamstarHelpers.Helpers.Debug;
@@ -32,6 +34,10 @@ namespace PiratesDemandYourBooty {
 		////////////////
 
 		private bool WasDaySinceLastCheck = true;
+
+		private IList<NPC> TownNPCs;
+
+		private IDictionary<int, int> KillsNearTownNPC = new ConcurrentDictionary<int, int>();
 
 
 		////////////////
@@ -97,6 +103,10 @@ namespace PiratesDemandYourBooty {
 		
 		internal void Update() {
 			this.UpdateForNegotiator();
+
+			if( this.IsInvading ) {
+				this.UpdateForInvasion();
+			}
 		}
 	}
 }

@@ -6,7 +6,7 @@ using static Terraria.ModLoader.ModContent;
 
 
 namespace PiratesDemandYourBooty.NPCs {
-	public partial class PirateRuffianTownNPC : ModNPC {
+	public partial class PirateNegotiatorTownNPC : ModNPC {
 		public static IReadOnlyList<string> Names { get; private set; } = new List<string> {
 			"Gillard",
 			"Jon",

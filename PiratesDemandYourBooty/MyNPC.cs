@@ -4,6 +4,7 @@ using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Helpers.Items;
 
 
@@ -48,10 +49,15 @@ namespace PiratesDemandYourBooty {
 		////////////////
 
 		public override void EditSpawnPool( IDictionary<int, float> pool, NPCSpawnInfo spawnInfo ) {
+			var logic = PirateLogic.Instance;
+
 			if( !PirateLogic.Instance.IsInvading ) {
 				return;
 			}
 			if( !spawnInfo.playerInTown ) {
+				return;
+			}
+			if( !logic.ValidateRaidForPlayer(spawnInfo.player) ) {
 				return;
 			}
 
@@ -73,8 +79,10 @@ namespace PiratesDemandYourBooty {
 		public override bool PreNPCLoot( NPC npc ) {
 			if( this.IsRaider ) {
 				if( Main.netMode != NetmodeID.MultiplayerClient ) {
-					this.DropCoins( npc );
+					this.DropCoins( npc, true );
+					PirateLogic.Instance.AddDeathAtNearbyTownNPC( npc );
 				}
+
 				return false;
 			}
 
@@ -84,13 +92,13 @@ namespace PiratesDemandYourBooty {
 
 		////////////////
 
-		private void DropCoins( NPC npc ) {
+		private void DropCoins( NPC npc, bool sync ) {
 			int coins = (int)( npc.value * 0.5f );
 			coins = Main.rand.Next( (int)( coins * 0.75f ), (int)( coins * 1.25f ) );
 
 			int[] coinWhos = ItemHelpers.CreateCoins( coins, npc.Center );
 
-			if( Main.netMode == NetmodeID.Server ) {
+			if( sync && Main.netMode == NetmodeID.Server ) {
 				foreach( int coinWho in coinWhos ) {
 					NetMessage.SendData( MessageID.SyncItem, -1, -1, null, coinWho );
 				}

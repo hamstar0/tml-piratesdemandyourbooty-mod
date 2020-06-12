@@ -45,5 +45,8 @@ namespace PiratesDemandYourBooty {
 
 		[DefaultValue( 60 * 60 * 15 )]	// 15 minutes
 		public int RaidDurationTicks { get; set; } = 60 * 60 * 15;
+
+		[DefaultValue( 15 )]
+		public int PirateRaiderKillsNearTownNPCBeforeClear { get; set; } = 15;
 	}
 }

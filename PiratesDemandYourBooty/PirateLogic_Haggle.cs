@@ -6,6 +6,22 @@ using HamstarHelpers.Helpers.Items;
 
 namespace PiratesDemandYourBooty {
 	partial class PirateLogic {
+		public static HaggleAmount GaugeOffer( long demand, long offer ) {
+			double measure = (double)offer / (double)demand;
+
+			if( measure >= 1.75d ) {
+				return HaggleAmount.VeryHigh;
+			} else if( measure >= 1.25d && measure < 1.75d ) {
+				return HaggleAmount.High;
+			} else if( measure >= 1.0d && measure < 1.25d ) {
+				return HaggleAmount.Good;
+			} else if( measure >= 0.5d && measure < 1.0d ) {
+				return HaggleAmount.Low;
+			} else {    // if( measure < 0.5d )
+				return HaggleAmount.TooLow;
+			}
+		}
+
 		public static string GetHighestCoinTypeOfGivenDemand( long demand, out bool tensOf ) {
 			int baseLog10 = (int)Math.Log10( demand );
 			//int baseLog100 = (int)(Math.Log10( demand ) * 0.5d);
@@ -35,48 +51,29 @@ namespace PiratesDemandYourBooty {
 
 		////////////////
 
-		public HaggleAmount GaugeOffer( long offer ) {
-			double measure = (double)offer / (double)this.PirateDemand;
-
-			if( measure >= 1.75d ) {
-				return HaggleAmount.VeryHigh;
-			} else if( measure >= 1.25d && measure < 1.75d ) {
-				return HaggleAmount.High;
-			} else if( measure >= 1.0d && measure < 1.25d ) {
-				return HaggleAmount.Good;
-			} else if( measure >= 0.5d && measure < 1.0d ) {
-				return HaggleAmount.Low;
-			} else {    // if( measure < 0.5d )
-				return HaggleAmount.TooLow;
-			}
-		}
-
-
-		////////////////
-
-		public void GiveNoOffer() {
+		public void GiveNoOffer( bool sync ) {
 			this.BeginInvasion();
 		}
 			
 
-		public void GiveFinalOffer( Player player, long offerAmount ) {
-			HaggleAmount measure = this.GaugeOffer( offerAmount );
+		public void GiveFinalOffer( Player player, long offerAmount, bool sync ) {
+			HaggleAmount measure = PirateLogic.GaugeOffer( this.PirateDemand, offerAmount );
 
 			switch( measure ) {
 			case HaggleAmount.VeryHigh:
 			case HaggleAmount.High:
 			case HaggleAmount.Good:
-				this.GiveGoodOffer( player, offerAmount );
+				this.GiveGoodOffer( player, offerAmount, sync );
 				break;
 			case HaggleAmount.Low:
 				switch( this.Patience ) {
 				case PirateMood.Normal:
 					this.Patience = PirateMood.Impatient;
-					this.GiveLowOffer( player, offerAmount );
+					this.GiveLowOffer( player, offerAmount, sync );
 					break;
 				case PirateMood.Impatient:
 					this.Patience = PirateMood.Menacing;
-					this.GiveLowOffer( player, offerAmount );
+					this.GiveLowOffer( player, offerAmount, sync );
 					break;
 				case PirateMood.Menacing:
 					this.Patience = PirateMood.Normal;
@@ -92,7 +89,7 @@ namespace PiratesDemandYourBooty {
 
 		////
 
-		private void GiveGoodOffer( Player player, long offerAmount ) {
+		private void GiveGoodOffer( Player player, long offerAmount, bool sync ) {
 			if( Main.netMode == NetmodeID.MultiplayerClient ) {
 				return;
 			}
@@ -102,7 +99,7 @@ namespace PiratesDemandYourBooty {
 				position: player.Center
 			);
 
-			if( Main.netMode == NetmodeID.Server ) {
+			if( sync && Main.netMode == NetmodeID.Server ) {
 				foreach( int itemWho in itemWhos ) {
 					NetMessage.SendData(
 						msgType: MessageID.SyncItem,
@@ -115,7 +112,7 @@ namespace PiratesDemandYourBooty {
 			}
 		}
 
-		private void GiveLowOffer( Player player, long offerAmount ) {
+		private void GiveLowOffer( Player player, long offerAmount, bool sync ) {
 			player.BuyItem( (int)offerAmount );
 		}
 	}

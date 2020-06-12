@@ -2,16 +2,19 @@ v1
 -	@Test
 	-	MP
 	-	Invasion
+-	Implement pirate "exit" fx
+-	Implement 'Pirate Ambusher'
+	-	Make attacks cause poison
+	-	Add "ambush"
+	-	Setup NPC
+	-	@Plan
+		-	When far away from the player, teleports near them (once), springing out of the ground
 -	Add raid mechanics
 	-	Abort raid when no town npcs exist
 	-	Add raid duration indicator
 	-	Add raid duration
 	-	Spawn raid for town npcs without minimum nearby pirate kills
 	-	Count pirates killed per town npc (nearby kills)
--	Implement pirate "exit" fx
--	Implement 'Pirate Ambusher'
-	-	@Plan
-		-	When far away from the player, teleports near them, springing out of the ground
 
 -	Implement town NPC duration
 -	Implement town NPC arrival

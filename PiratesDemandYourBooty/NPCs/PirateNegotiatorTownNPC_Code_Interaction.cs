@@ -5,17 +5,17 @@ using static Terraria.ModLoader.ModContent;
 
 
 namespace PiratesDemandYourBooty.NPCs {
-	public partial class PirateRuffianTownNPC : ModNPC {
+	public partial class PirateNegotiatorTownNPC : ModNPC {
 		public override string GetChat() {
 			if( !this.HasFirstChat ) {
 				this.HasFirstChat = true;
 
 				PirateMood patience = PirateLogic.Instance.Patience;
-				return PirateRuffianTownNPC.Demands[ patience ];
+				return PirateNegotiatorTownNPC.Demands[ patience ];
 			}
 
-			int i = Main.rand.Next( PirateRuffianTownNPC.Chats.Count );
-			return PirateRuffianTownNPC.Chats[i];
+			int i = Main.rand.Next( PirateNegotiatorTownNPC.Chats.Count );
+			return PirateNegotiatorTownNPC.Chats[i];
 		}
 
 
@@ -37,7 +37,7 @@ namespace PiratesDemandYourBooty.NPCs {
 
 			if( firstButton ) {
 				PirateMood patience = PirateLogic.Instance.Patience;
-				Main.npcChatText = PirateRuffianTownNPC.Demands[ patience ];
+				Main.npcChatText = PirateNegotiatorTownNPC.Demands[ patience ];
 			} else {
 				PDYBMod.Instance.UIContextComponents.OpenHaggleUI();
 				Main.npcChatText = "";

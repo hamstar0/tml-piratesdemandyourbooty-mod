@@ -9,11 +9,13 @@ using static Terraria.ModLoader.ModContent;
 
 namespace PiratesDemandYourBooty.NPCs {
 	[AutoloadHead]
-	public partial class PirateRuffianTownNPC : ModNPC {
-		public static NPC GetNearbyPirateNPC( Player player ) {
+	public partial class PirateNegotiatorTownNPC : ModNPC {
+		public static NPC GetNearbyNegotiator( Player player ) {
+			int negotType = NPCType<PirateNegotiatorTownNPC>();
+
 			for( int i = 0; i < Main.npc.Length; i++ ) {
 				NPC npc = Main.npc[i];
-				if( npc == null || !npc.active || npc.type != NPCType<PirateRuffianTownNPC>() ) {
+				if( npc == null || !npc.active || npc.type != negotType ) {
 					continue;
 				}
 
@@ -114,8 +116,8 @@ namespace PiratesDemandYourBooty.NPCs {
 		////////////////
 
 		public override string TownNPCName() {
-			int i = WorldGen.genRand.Next( PirateRuffianTownNPC.Names.Count );
-			return PirateRuffianTownNPC.Names[i];
+			int i = WorldGen.genRand.Next( PirateNegotiatorTownNPC.Names.Count );
+			return PirateNegotiatorTownNPC.Names[i];
 		}
 
 		public override void NPCLoot() {
