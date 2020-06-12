@@ -15,16 +15,13 @@ namespace PiratesDemandYourBooty {
 		}
 
 		public void EndInvasion() {
+			this.KillsNearTownNPC.Clear();
 		}
 
 
 		////////////////
 
 		private IList<NPC> GetNearbyTownNPCs( Vector2 worldPosition ) {
-			if( this.TownNPCs.Count == 0 ) {
-				this.TownNPCs = Main.npc.SafeWhere( n => n.active == true && n.townNPC ).ToList();
-			}
-
 			var nearbyTownNpcs = new List<NPC>();
 
 			foreach( NPC townNpc in this.TownNPCs ) {
@@ -43,11 +40,11 @@ namespace PiratesDemandYourBooty {
 		public void AddDeathAtNearbyTownNPC( NPC npc ) {
 			IList<NPC> nearbyTownNpcs = this.GetNearbyTownNPCs( npc.Center );
 
-			foreach( NPC townNpc in nearbyTownNpcs ) {
-				if( this.KillsNearTownNPC.ContainsKey( townNpc.type ) ) {
-					this.KillsNearTownNPC[ townNpc.type ] += 1;
+			foreach( NPC nearbyTownNpc in nearbyTownNpcs ) {
+				if( this.KillsNearTownNPC.ContainsKey( nearbyTownNpc.type ) ) {
+					this.KillsNearTownNPC[ nearbyTownNpc.type ] += 1;
 				} else {
-					this.KillsNearTownNPC[ townNpc.type ] = 1;
+					this.KillsNearTownNPC[ nearbyTownNpc.type ] = 1;
 				}
 			}
 		}
@@ -74,10 +71,9 @@ namespace PiratesDemandYourBooty {
 		////////////////
 
 		private void UpdateForInvasion() {
-			if( this.TownNPCs.Count > 0 ) {
-				this.TownNPCs.Clear();
-				this.KillsNearTownNPC.Clear();
-			} else {
+			this.TownNPCs = Main.npc.SafeWhere( n => n.active == true && n.townNPC ).ToList();
+
+			if( this.TownNPCs.Count == 0 ) {
 				this.EndInvasion();
 			}
 		}
