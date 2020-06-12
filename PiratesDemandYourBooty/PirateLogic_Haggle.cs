@@ -51,45 +51,45 @@ namespace PiratesDemandYourBooty {
 
 		////////////////
 
-		public void GiveNoOffer( bool sync ) {
-			this.BeginRaid();
+		public void GiveNoOffer( bool syncFromServer ) {
+			this.BeginRaid( syncFromServer );
 		}
 			
 
-		public void GiveFinalOffer( Player player, long offerAmount, bool sync ) {
+		public void GiveFinalOffer( Player player, long offerAmount, bool syncFromServer ) {
 			HaggleAmount measure = PirateLogic.GaugeOffer( this.PirateDemand, offerAmount );
 
 			switch( measure ) {
 			case HaggleAmount.VeryHigh:
 			case HaggleAmount.High:
 			case HaggleAmount.Good:
-				this.GiveGoodOffer( player, offerAmount, sync );
+				this.GiveGoodOffer( player, offerAmount, syncFromServer );
 				break;
 			case HaggleAmount.Low:
 				switch( this.Patience ) {
 				case PirateMood.Normal:
 					this.Patience = PirateMood.Impatient;
-					this.GiveLowOffer( player, offerAmount, sync );
+					this.GiveLowOffer( player, offerAmount, syncFromServer );
 					break;
 				case PirateMood.Impatient:
 					this.Patience = PirateMood.Menacing;
-					this.GiveLowOffer( player, offerAmount, sync );
+					this.GiveLowOffer( player, offerAmount, syncFromServer );
 					break;
 				case PirateMood.Menacing:
 					this.Patience = PirateMood.Normal;
-					this.BeginRaid();
+					this.BeginRaid( syncFromServer );
 					break;
 				}
 				break;
 			case HaggleAmount.TooLow:
-				this.BeginRaid();
+				this.BeginRaid( syncFromServer );
 				break;
 			}
 		}
 
 		////
 
-		private void GiveGoodOffer( Player player, long offerAmount, bool sync ) {
+		private void GiveGoodOffer( Player player, long offerAmount, bool syncFromServer ) {
 			if( Main.netMode == NetmodeID.MultiplayerClient ) {
 				return;
 			}
@@ -99,7 +99,7 @@ namespace PiratesDemandYourBooty {
 				position: player.Center
 			);
 
-			if( sync && Main.netMode == NetmodeID.Server ) {
+			if( syncFromServer && Main.netMode == NetmodeID.Server ) {
 				foreach( int itemWho in itemWhos ) {
 					NetMessage.SendData(
 						msgType: MessageID.SyncItem,
@@ -112,7 +112,7 @@ namespace PiratesDemandYourBooty {
 			}
 		}
 
-		private void GiveLowOffer( Player player, long offerAmount, bool sync ) {
+		private void GiveLowOffer( Player player, long offerAmount, bool syncFromServer ) {
 			player.BuyItem( (int)offerAmount );
 		}
 	}

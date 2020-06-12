@@ -10,13 +10,20 @@ using static Terraria.ModLoader.ModContent;
 
 namespace PiratesDemandYourBooty.NPCs {
 	public partial class PirateNegotiatorTownNPC : ModNPC {
-		public static void AllDealingsFinished( Player player, long offerAmount, bool sync ) {
+		public static void AllDealingsFinished_FromCurrentClient( long offerAmount ) {
+			if( Main.netMode == NetmodeID.MultiplayerClient ) {
+				DemandReplyProtocol.BroadcastFromClient( offerAmount );
+			}
+		}
+
+		
+		public static void AllDealingsFinished_ToClient( Player player, long offerAmount ) {
 			var logic = PirateLogic.Instance;
 
 			if( player != null && offerAmount > 0 ) {
-				logic.GiveFinalOffer( player, offerAmount, sync );
+				logic.GiveFinalOffer( player, offerAmount, false );
 			} else {
-				logic.GiveNoOffer( sync );
+				logic.GiveNoOffer( false );
 			}
 
 			logic.SetNegotiatorArrivalTime( logic.IsRaiding );
@@ -26,15 +33,28 @@ namespace PiratesDemandYourBooty.NPCs {
 
 			// Remove negotiator(s)
 			foreach( NPC npc in negotiator ) {
-				PirateNegotiatorTownNPC.Exit( npc, sync );
+				PirateNegotiatorTownNPC.Exit( npc );
+			}
+		}
+
+
+		public static void AllDealingsFinished_FromServer( Player player, long offerAmount ) {
+			var logic = PirateLogic.Instance;
+
+			if( player != null && offerAmount > 0 ) {
+				logic.GiveFinalOffer( player, offerAmount, true );
+			} else {
+				logic.GiveNoOffer( true );
 			}
 
-			if( sync ) {
-				if( Main.netMode == NetmodeID.MultiplayerClient ) {
-					DemandReplyProtocol.BroadcastFromClient( offerAmount );
-				} else if( Main.netMode == NetmodeID.Server ) {
-					DemandReplyProtocol.BroadcastFromServer( offerAmount );
-				}
+			logic.SetNegotiatorArrivalTime( logic.IsRaiding );
+
+			int negotType = NPCType<PirateNegotiatorTownNPC>();
+			IEnumerable<NPC> negotiator = Main.npc.SafeWhere( n => n?.active == true && n.type == negotType );
+
+			// Remove negotiator(s)
+			foreach( NPC npc in negotiator ) {
+				PirateNegotiatorTownNPC.Exit( npc );
 			}
 		}
 
@@ -43,8 +63,10 @@ namespace PiratesDemandYourBooty.NPCs {
 		////////////////
 
 		private void UpdateHaggleState() {
-			if( this.HagglingDone && Main.npcChatText == "" ) {
-				PirateNegotiatorTownNPC.AllDealingsFinished( Main.LocalPlayer, this.OfferAmount, true );
+			if( Main.netMode != NetmodeID.Server ) {
+				if( this.HagglingDone && Main.npcChatText == "" ) {
+					PirateNegotiatorTownNPC.AllDealingsFinished_FromCurrentClient( this.OfferAmount );
+				}
 			}
 		}
 

@@ -27,12 +27,8 @@ namespace PiratesDemandYourBooty.NPCs {
 		}
 
 
-		public static void Exit( NPC npc, bool sync ) {
-			if( sync ) {
-				NPCHelpers.Remove( npc );
-			} else {
-				npc.active = false;
-			}
+		public static void Exit( NPC npc ) {
+			npc.active = false;
 
 			// TODO: Poof!
 		}

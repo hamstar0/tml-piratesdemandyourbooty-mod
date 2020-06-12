@@ -50,11 +50,11 @@ namespace PiratesDemandYourBooty.NetProtocols {
 		////////////////
 
 		protected override void ReceiveOnClient() {
-			PirateNegotiatorTownNPC.AllDealingsFinished( Main.player[this.WhoAmI], this.OfferAmount, false );
+			PirateNegotiatorTownNPC.AllDealingsFinished_ToClient( Main.player[this.WhoAmI], this.OfferAmount );
 		}
 
 		protected override void ReceiveOnServer( int fromWho ) {
-			PirateNegotiatorTownNPC.AllDealingsFinished( Main.player[this.WhoAmI], this.OfferAmount, false );
+			PirateNegotiatorTownNPC.AllDealingsFinished_FromServer( Main.player[this.WhoAmI], this.OfferAmount );
 		}
 	}
 }

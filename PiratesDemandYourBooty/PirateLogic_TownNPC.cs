@@ -31,14 +31,14 @@ namespace PiratesDemandYourBooty {
 
 		////////////////
 		
-		public void CheckNegotiatorTimeUp() {
+		public void CheckAndApplyNegotiatorTimeUp_FromServer() {
 			int negotType = NPCType<PirateNegotiatorTownNPC>();
 			NPC negotiator = Main.npc.FirstOrDefault( n => n?.active == true && n.type == negotType );
 			if( negotiator == null ) {
 				return;
 			}
 
-			PirateNegotiatorTownNPC.AllDealingsFinished( null, 0, true );
+			PirateNegotiatorTownNPC.AllDealingsFinished_FromServer( null, 0 );
 		}
 
 
@@ -49,14 +49,12 @@ namespace PiratesDemandYourBooty {
 				if( this.WasDaySinceLastCheck != Main.dayTime ) {
 					this.WasDaySinceLastCheck = Main.dayTime;
 					if( Main.dayTime ) {    // morning
-						this.CheckNegotiatorTimeUp();
+						this.CheckAndApplyNegotiatorTimeUp_FromServer();
 					}
 				}
 			}
 
-			if( this.IsRaiding ) {
-				this.RaidDurationTicks++;
-			} else {
+			if( !this.IsRaiding ) {
 				this.TicksSinceLastArrival++;
 			}
 		}

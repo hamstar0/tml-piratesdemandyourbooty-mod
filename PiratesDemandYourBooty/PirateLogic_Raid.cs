@@ -3,19 +3,32 @@ using System.Linq;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using HamstarHelpers.Helpers.DotNET;
+using PiratesDemandYourBooty.NetProtocols;
 
 
 namespace PiratesDemandYourBooty {
 	partial class PirateLogic {
-		public void BeginRaid() {
-			this.RaidDurationTicks = PDYBConfig.Instance.RaidDurationTicks;
+		public void BeginRaid( bool syncFromServer ) {
+			if( syncFromServer ) {
+				RaidStateProtocol.BroadcastFromServer( true );
+			} else {
+				this.RaidDurationTicks = PDYBConfig.Instance.RaidDurationTicks;
 
-			Main.NewText( "Pirates are raiding your town!", new Color(175, 75, 255) );
+				Main.NewText( "Pirates are raiding your town!", new Color( 175, 75, 255 ) );
+			}
 		}
 
-		public void EndRaid() {
-			this.KillsNearTownNPC.Clear();
+		public void EndRaid( bool syncFromServer ) {
+			if( syncFromServer ) {
+				RaidStateProtocol.BroadcastFromServer( false );
+			} else {
+				this.RaidDurationTicks = 0;
+				this.KillsNearTownNPC.Clear();
+
+				Main.NewText( "Pirate raid has ended!", new Color( 175, 75, 255 ) );
+			}
 		}
 
 
@@ -71,10 +84,20 @@ namespace PiratesDemandYourBooty {
 		////////////////
 
 		private void UpdateForRaid() {
+			if( Main.netMode == NetmodeID.MultiplayerClient ) {
+				return;
+			}
+
 			this.TownNPCs = Main.npc.SafeWhere( n => n.active == true && n.townNPC ).ToList();
 
 			if( this.TownNPCs.Count == 0 ) {
-				this.EndRaid();
+				this.EndRaid( true );
+			}
+
+			this.RaidDurationTicks++;
+
+			if( this.RaidDurationTicks >= PDYBConfig.Instance.RaidDurationTicks ) {
+				this.EndRaid( true );
 			}
 		}
 	}
