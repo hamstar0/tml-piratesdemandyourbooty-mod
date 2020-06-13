@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Helpers.DotNET;
 using PiratesDemandYourBooty.NetProtocols;
 using static Terraria.ModLoader.ModContent;
@@ -10,9 +11,11 @@ using static Terraria.ModLoader.ModContent;
 
 namespace PiratesDemandYourBooty.NPCs {
 	public partial class PirateNegotiatorTownNPC : ModNPC {
-		public static void AllDealingsFinished_FromCurrentClient( long offerAmount ) {
+		public static void AllDealingsFinished_FromLocal( long offerAmount ) {
 			if( Main.netMode == NetmodeID.MultiplayerClient ) {
 				DemandReplyProtocol.BroadcastFromClient( offerAmount );
+			} else if( Main.netMode == NetmodeID.SinglePlayer ) {
+				PirateNegotiatorTownNPC.AllDealingsFinished_ToClient( Main.LocalPlayer, offerAmount );
 			}
 		}
 
@@ -65,7 +68,7 @@ namespace PiratesDemandYourBooty.NPCs {
 		private void UpdateHaggleState( NPC npc ) {
 			if( Main.netMode != NetmodeID.Server ) {
 				if( this.HagglingDone && Main.npcChatText == "" ) {
-					PirateNegotiatorTownNPC.AllDealingsFinished_FromCurrentClient( this.OfferAmount );
+					PirateNegotiatorTownNPC.AllDealingsFinished_FromLocal( this.OfferAmount );
 				}
 			}
 		}
@@ -88,7 +91,7 @@ namespace PiratesDemandYourBooty.NPCs {
 				this.OfferAmount = offerAmount;
 			}
 
-			return true;
+			return this.OfferAmount > 0;
 		}
 	}
 }

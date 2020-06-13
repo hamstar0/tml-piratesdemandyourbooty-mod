@@ -88,9 +88,9 @@ namespace PiratesDemandYourBooty.NPCs {
 
 
 		public static IDictionary<HaggleAmount, string> OfferReplies { get; } = new Dictionary<HaggleAmount, string> {
-			{ HaggleAmount.VeryHigh, "Hohohoho! Much obliged t' ye!" },
-			{ HaggleAmount.High, "Pleasure doin' business wit' ye!" },
-			{ HaggleAmount.Good, "'Tis acceptable." },
+			{ HaggleAmount.VeryHigh, "Hohohoho! Much obliged t' ye! Ye be have'n it back, as promised. Let no man say we ain't pirates o' our word!" },
+			{ HaggleAmount.High, "Pleasure doin' business wit' ye! Ye be have'n it back, as promised. Let no man say we ain't pirates o' our word!" },
+			{ HaggleAmount.Good, "'Tis acceptable. Ye be have'n it back, as promised. Let no man say we ain't pirates o' our word!" },
 			{ HaggleAmount.Low, "Arrr! No good! I be takin' what you got, but ye best nah be as stingy th' next time." },
 			{ HaggleAmount.TooLow, "Scupper that! 'Tis an insult jus' t' look at. I suppose'n we jus' take our due th' hard way, then. Unhand yer booty." },
 			//{ HaggleReplyType.TooLow, "No sense o' charity? Mayhaps we take some o' the burden off o' ye. Unhand yer booty." },

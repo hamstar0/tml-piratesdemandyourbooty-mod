@@ -11,7 +11,7 @@ using PiratesDemandYourBooty.NetProtocols;
 namespace PiratesDemandYourBooty {
 	partial class PirateLogic {
 		public void BeginRaid( bool syncFromServer ) {
-			if( syncFromServer ) {
+			if( Main.netMode != NetmodeID.SinglePlayer && syncFromServer ) {
 				if( Main.netMode == NetmodeID.Server ) {
 					RaidStateProtocol.BroadcastFromServer( true );
 				}
@@ -23,7 +23,7 @@ namespace PiratesDemandYourBooty {
 		}
 
 		public void EndRaid( bool syncFromServer ) {
-			if( syncFromServer ) {
+			if( Main.netMode != NetmodeID.SinglePlayer && syncFromServer ) {
 				if( Main.netMode == NetmodeID.Server ) {
 					RaidStateProtocol.BroadcastFromServer( false );
 				}

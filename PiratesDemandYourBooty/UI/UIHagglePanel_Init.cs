@@ -49,10 +49,10 @@ namespace PiratesDemandYourBooty.UI {
 
 			yOffset += 72f;
 
-			var offerBut = new UITextPanelButton( this.Theme, "Make Offer" );
-			offerBut.Left.Set( 0f, 0f );
-			offerBut.Top.Set( yOffset, 0f );
-			offerBut.OnClick += ( _, __ ) => {
+			this.OfferButtonElem = new UITextPanelButton( this.Theme, "Test Offer" );
+			this.OfferButtonElem.Left.Set( 8f, 0f );
+			this.OfferButtonElem.Top.Set( yOffset, 0f );
+			this.OfferButtonElem.OnClick += ( _, __ ) => {
 				this.MakeOffer();
 			};
 
@@ -64,8 +64,8 @@ namespace PiratesDemandYourBooty.UI {
 			titleElem.Top.Set( yOffset, 0f );
 			this.AppendThemed( titleElem );
 
-			this.AppendThemed( offerBut );
-			this.Components.Add( offerBut );
+			this.AppendThemed( this.OfferButtonElem );
+			this.Components.Add( this.OfferButtonElem );
 		}
 
 

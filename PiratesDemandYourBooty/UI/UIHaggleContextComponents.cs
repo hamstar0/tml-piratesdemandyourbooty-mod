@@ -50,8 +50,8 @@ namespace PiratesDemandYourBooty.UI {
 
 		////////////////
 
-		public void OpenHaggleUI() {
-			this.HagglePanel.Open();
+		public void OpenHaggleUI( bool offerTested ) {
+			this.HagglePanel.Open( offerTested );
 		}
 
 		public void CloseHaggleUI() {

@@ -23,7 +23,7 @@ namespace PiratesDemandYourBooty {
 
 				DebugHelpers.Print( "pirate_negotiator_info", "Patience: "+logic.Patience
 					+", demand: "+logic.PirateDemand
-					+", TicksSinceLastArrival: "+logic.TicksSinceLastArrival
+					+", TicksWhileNegotiatorAway: "+logic.TicksWhileNegotiatorAway
 					+", TicksUntilNextArrival: "+logic.TicksUntilNextArrival);
 				DebugHelpers.Print( "pirate_raid_info", "Is raiding: "+logic.IsRaiding
 					+", elapsed ticks: "+logic.RaidElapsedTicks

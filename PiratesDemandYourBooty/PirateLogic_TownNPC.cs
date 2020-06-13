@@ -11,7 +11,7 @@ namespace PiratesDemandYourBooty {
 		public void SetNextNegotiatorArrivalTime( bool postInvasion ) {
 			var config = PDYBConfig.Instance;
 
-			this.TicksSinceLastArrival = 0;
+			this.TicksWhileNegotiatorAway = 0;
 			this.TicksUntilNextArrival = config.NegotiatorMinimumTicksUntilReturn;
 
 			if( postInvasion ) {
@@ -21,7 +21,7 @@ namespace PiratesDemandYourBooty {
 
 
 		public bool CanNegotiatorMoveIn() {
-			if( this.TicksSinceLastArrival > this.TicksUntilNextArrival ) {
+			if( this.TicksWhileNegotiatorAway > this.TicksUntilNextArrival ) {
 				return true;
 			}
 
@@ -44,6 +44,15 @@ namespace PiratesDemandYourBooty {
 
 		////////////////
 
+		internal bool CheckAndValidateNegotiatorPresence( NPC npc ) {
+			this.TicksWhileNegotiatorAway = 0;
+
+			return !this.IsRaiding && !Main.hardMode;
+		}
+
+
+		////////////////
+
 		private void UpdateForNegotiator() {
 			if( Main.netMode != NetmodeID.MultiplayerClient ) {
 				if( this.WasDaySinceLastCheck != Main.dayTime ) {
@@ -55,7 +64,7 @@ namespace PiratesDemandYourBooty {
 			}
 
 			if( !this.IsRaiding ) {
-				this.TicksSinceLastArrival++;
+				this.TicksWhileNegotiatorAway++;
 			}
 		}
 	}

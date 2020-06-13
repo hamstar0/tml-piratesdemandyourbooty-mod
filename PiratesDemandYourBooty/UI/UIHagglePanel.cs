@@ -10,6 +10,11 @@ using HamstarHelpers.Helpers.Players;
 
 namespace PiratesDemandYourBooty.UI {
 	public partial class UIHagglePanel : UIThemedPanel {
+		private UITextPanelButton OfferButtonElem;
+
+
+		////////////////
+
 		public bool IsOpen { get; private set; } = false;
 
 		public long OfferTotal { get; private set; }
@@ -17,22 +22,28 @@ namespace PiratesDemandYourBooty.UI {
 
 
 		////////////////
-
+		
 		public UIHagglePanel() : base( UITheme.Vanilla, false ) {
 			this.Width.Set( 512f, 0f );
-			this.Height.Set( 112f, 0f );
+			this.Height.Set( 120f, 0f );
 		}
 
 
 		////////////////
 		
-		public void Open() {
+		public void Open( bool offerTested ) {
 			this.IsOpen = true;
 
 			foreach( IToggleable comp in this.Components ) {
 				var themedComp = comp as IThemeable;
 				themedComp?.Show();
 				comp.Enable();
+			}
+
+			if( offerTested ) {
+				this.OfferButtonElem.SetText( "Confirm Offer" );
+			} else {
+				this.OfferButtonElem.SetText( "Test Offer" );
 			}
 		}
 
@@ -64,14 +75,16 @@ namespace PiratesDemandYourBooty.UI {
 		////////////////
 
 		public override void Update( GameTime gameTime ) {
-			if( this.IsOpen ) {
-				base.Update( gameTime );
+			if( !this.IsOpen ) {
+				return;
+			}
 
-				long money = PlayerItemHelpers.CountMoney( Main.LocalPlayer, false );
-				if( this.OfferTotal > money ) {
-					this.Reset();
-					Main.NewText( "Don't be tryin t' pull a fast one, matey!", Color.Yellow );
-				}
+			base.Update( gameTime );
+
+			long money = PlayerItemHelpers.CountMoney( Main.LocalPlayer, false );
+			if( this.OfferTotal > money ) {
+				this.Reset();
+				Main.NewText( "Don't be tryin t' pull a fast one, matey!", Color.Yellow );
 			}
 		}
 
