@@ -23,6 +23,10 @@ namespace PiratesDemandYourBooty {
 
 		////////////
 
+		public bool DebugModeInfo { get; set; } = false;
+
+		////
+
 		[DefaultValue( 0.15f )]
 		[CustomModConfigItem( typeof(MyFloatInputElement) )]
 		public float NegotiatorInterestPercent { get; set; } = 0.15f;
