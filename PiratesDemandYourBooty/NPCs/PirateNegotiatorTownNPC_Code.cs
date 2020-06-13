@@ -121,7 +121,7 @@ namespace PiratesDemandYourBooty.NPCs {
 		}
 
 		public override void TownNPCAttackProjSpeed( ref float multiplier, ref float gravityCorrection, ref float randomOffset ) {
-			multiplier = 8f;
+			multiplier = 10f;
 			randomOffset = 2f;
 		}
 

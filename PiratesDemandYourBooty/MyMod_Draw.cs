@@ -35,7 +35,6 @@ namespace PiratesDemandYourBooty {
 				this.UIContext?.Draw( Main.spriteBatch, Main._drawInterfaceGameTime );
 				return true;
 			};
-			
 
 			GameInterfaceDrawMethod raidUI = () => {
 				var logic = PirateLogic.Instance;

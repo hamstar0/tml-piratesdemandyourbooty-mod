@@ -62,13 +62,13 @@ namespace PiratesDemandYourBooty.UI {
 		////////////////
 
 		public override void Update( GameTime gt ) {
-			this.UpdateHaggling();
+			this.UpdateHagglingUIState();
 			base.Update( gt );
 		}
 
 		////
 
-		private void UpdateHaggling() {
+		private void UpdateHagglingUIState() {
 			if( !this.HagglePanel.IsOpen ) {
 				return;
 			}
@@ -77,7 +77,7 @@ namespace PiratesDemandYourBooty.UI {
 			bool isHaggling = !plr.dead
 				&& !Main.playerInventory
 				&& !plr.CCed
-				&& PirateNegotiatorTownNPC.GetNearbyNegotiator( plr ) != null;
+				&& PirateNegotiatorTownNPC.GetNearbyNegotiator(plr) != null;
 
 			if( !isHaggling ) {
 				this.CloseHaggleUI();

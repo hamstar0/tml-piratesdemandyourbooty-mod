@@ -52,16 +52,20 @@ namespace PiratesDemandYourBooty {
 			var logic = PirateLogic.Instance;
 
 			if( !PirateLogic.Instance.IsRaiding ) {
+Main.NewText("1");
 				return;
 			}
 			if( !spawnInfo.playerInTown ) {
+Main.NewText("2");
 				return;
 			}
 			if( !logic.ValidateRaidForPlayer(spawnInfo.player) ) {
+Main.NewText("3");
 				return;
 			}
 
 			float average = pool.Sum( kv => kv.Value ) / (float)pool.Count;
+Main.NewText( "spawning pirates avg "+average );
 
 			pool.Clear();
 

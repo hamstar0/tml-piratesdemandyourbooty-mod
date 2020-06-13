@@ -53,6 +53,12 @@ namespace PiratesDemandYourBooty.UI {
 			this.OfferButtonElem.Left.Set( 8f, 0f );
 			this.OfferButtonElem.Top.Set( yOffset, 0f );
 			this.OfferButtonElem.OnClick += ( _, __ ) => {
+				foreach( var toggleable in this.Components ) {
+					var input = toggleable as UITextInputAreaPanel;
+					if( input?.HasFocus ?? false ) {
+						input.Unfocus();
+					}
+				}
 				this.MakeOffer();
 			};
 
@@ -93,32 +99,41 @@ namespace PiratesDemandYourBooty.UI {
 			inputElem.TextColor = color;
 			inputElem.OnPreTextChange += strBuild => {
 				string str = strBuild.ToString();
-				if( !Int32.TryParse(str, out int rawVal) ) {
-					return str == "";
-				}
-				return true;
+				if( str == "" ) { return true; }
+				return this.ProcessCoinInput( str, valueFunc, out string _ );
 			};
 			inputElem.OnUnfocus += () => {
-				if( !Int32.TryParse(inputElem.Text, out int rawVal) ) {
-					inputElem.SetTextDirect( "0" );
-					return;
-				}
-
-				int newVal = (int)MathHelper.Clamp( rawVal, 0, 99 );
-				if( newVal != rawVal ) {
-					inputElem.SetTextDirect( ""+newVal );
-				}
-
-				if( newVal > 0 && !valueFunc(newVal) ) {
-					inputElem.SetTextDirect( "0" );
-					Main.NewText( "Not enough money!", Color.Yellow );
-					return;
+				if( !this.ProcessCoinInput(inputElem.Text, valueFunc, out string output) ) {
+					inputElem.SetTextDirect( output );
 				}
 			};
 			this.AppendThemed( inputElem );
 			this.Components.Add( inputElem );
 
 			xOffset += 128f;
+		}
+
+
+		////
+
+		private bool ProcessCoinInput( string input, Func<int, bool> valueFunc, out string output ) {
+			output = "0";
+
+			if( !Int32.TryParse( input, out int rawVal ) ) {
+				return false;
+			}
+
+			int newVal = (int)MathHelper.Clamp( rawVal, 0, 99 );
+			if( newVal != rawVal ) {
+				output = "" + newVal;
+			}
+
+			if( !valueFunc(newVal) ) {
+				Main.NewText( "Not enough money!", Color.Yellow );
+				return false;
+			}
+
+			return true;
 		}
 	}
 }

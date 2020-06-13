@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using HamstarHelpers.Helpers.DotNET;
+using HamstarHelpers.Helpers.DotNET.Extensions;
 using PiratesDemandYourBooty.NetProtocols;
 
 
@@ -16,7 +17,7 @@ namespace PiratesDemandYourBooty {
 					RaidStateProtocol.BroadcastFromServer( true );
 				}
 			} else {
-				this.RaidElapsedTicks = PDYBConfig.Instance.RaidDurationTicks;
+				this.RaidElapsedTicks = 1;
 
 				Main.NewText( "Pirates are raiding your town!", new Color( 175, 75, 255 ) );
 			}
@@ -68,16 +69,17 @@ namespace PiratesDemandYourBooty {
 
 
 		////////////////
-		
+
 		public bool ValidateRaidForPlayer( Player player ) {
 			IList<NPC> nearbyTownNpcs = this.GetNearbyTownNPCs( player.Center );
 
 			foreach( NPC nearbyTownNpc in nearbyTownNpcs ) {
-				int deaths;
-				if( this.KillsNearTownNPC.TryGetValue( nearbyTownNpc.type, out deaths ) ) {
+				if( this.KillsNearTownNPC.TryGetValue( nearbyTownNpc.type, out int deaths ) ) {
 					if( deaths < PDYBConfig.Instance.PirateRaiderKillsNearTownNPCBeforeClear ) {
 						return true;
 					}
+				} else {
+					return true;
 				}
 			}
 
@@ -97,15 +99,32 @@ namespace PiratesDemandYourBooty {
 		}
 
 		private void UpdateForRaid_Host() {
-			this.TownNPCs = Main.npc.SafeWhere( n => n.active == true && n.townNPC ).ToList();
-
-			if( this.TownNPCs.Count == 0 ) {
-				this.EndRaid( true );
-			}
+			this.TownNPCs = Main.npc.SafeWhere( n => n?.active == true && n.townNPC ).ToList();
 
 			if( this.RaidElapsedTicks >= PDYBConfig.Instance.RaidDurationTicks ) {
-				this.EndRaid( true );
+				this.EndRaid( Main.netMode == NetmodeID.Server );
 			}
+
+			if( !this.IsTownRaidable() ) {
+				this.EndRaid( Main.netMode == NetmodeID.Server );
+			}
+		}
+
+
+		////
+
+		private bool IsTownRaidable() {
+			if( this.KillsNearTownNPC.Count < this.TownNPCs.Count ) {
+				return true;
+			}
+
+			foreach( (int townNpcType, int pirateDeaths) in this.KillsNearTownNPC ) {
+				if( pirateDeaths < PDYBConfig.Instance.PirateRaiderKillsNearTownNPCBeforeClear ) {
+					return true;
+				}
+			}
+
+			return false;
 		}
 	}
 }
