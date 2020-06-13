@@ -12,7 +12,9 @@ namespace PiratesDemandYourBooty {
 	partial class PirateLogic {
 		public void BeginRaid( bool syncFromServer ) {
 			if( syncFromServer ) {
-				RaidStateProtocol.BroadcastFromServer( true );
+				if( Main.netMode == NetmodeID.Server ) {
+					RaidStateProtocol.BroadcastFromServer( true );
+				}
 			} else {
 				this.RaidElapsedTicks = PDYBConfig.Instance.RaidDurationTicks;
 
@@ -22,7 +24,9 @@ namespace PiratesDemandYourBooty {
 
 		public void EndRaid( bool syncFromServer ) {
 			if( syncFromServer ) {
-				RaidStateProtocol.BroadcastFromServer( false );
+				if( Main.netMode == NetmodeID.Server ) {
+					RaidStateProtocol.BroadcastFromServer( false );
+				}
 			} else {
 				this.RaidElapsedTicks = 0;
 				this.KillsNearTownNPC.Clear();

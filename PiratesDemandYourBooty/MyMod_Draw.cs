@@ -20,7 +20,7 @@ namespace PiratesDemandYourBooty {
 		////////////////
 
 		public override void UpdateUI( GameTime gameTime ) {
-			this.UIContext?.Update( gameTime );
+			//this.UIContext?.Update( gameTime );	//?!
 		}
 
 
@@ -31,6 +31,7 @@ namespace PiratesDemandYourBooty {
 			//
 
 			GameInterfaceDrawMethod haggleUI = () => {
+				this.UIContext?.Update( Main._drawInterfaceGameTime );	// ?
 				this.UIContext?.Draw( Main.spriteBatch, Main._drawInterfaceGameTime );
 				return true;
 			};
