@@ -26,7 +26,7 @@ namespace PiratesDemandYourBooty.NPCs {
 				logic.GiveNoOffer( false );
 			}
 
-			logic.SetNegotiatorArrivalTime( logic.IsRaiding );
+			logic.SetNextNegotiatorArrivalTime( logic.IsRaiding );
 
 			int negotType = NPCType<PirateNegotiatorTownNPC>();
 			IEnumerable<NPC> negotiator = Main.npc.SafeWhere( n => n?.active == true && n.type == negotType );
@@ -47,7 +47,7 @@ namespace PiratesDemandYourBooty.NPCs {
 				logic.GiveNoOffer( true );
 			}
 
-			logic.SetNegotiatorArrivalTime( logic.IsRaiding );
+			logic.SetNextNegotiatorArrivalTime( logic.IsRaiding );
 
 			int negotType = NPCType<PirateNegotiatorTownNPC>();
 			IEnumerable<NPC> negotiator = Main.npc.SafeWhere( n => n?.active == true && n.type == negotType );
@@ -62,7 +62,7 @@ namespace PiratesDemandYourBooty.NPCs {
 
 		////////////////
 
-		private void UpdateHaggleState() {
+		private void UpdateHaggleState( NPC npc ) {
 			if( Main.netMode != NetmodeID.Server ) {
 				if( this.HagglingDone && Main.npcChatText == "" ) {
 					PirateNegotiatorTownNPC.AllDealingsFinished_FromCurrentClient( this.OfferAmount );

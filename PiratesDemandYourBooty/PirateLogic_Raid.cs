@@ -14,7 +14,7 @@ namespace PiratesDemandYourBooty {
 			if( syncFromServer ) {
 				RaidStateProtocol.BroadcastFromServer( true );
 			} else {
-				this.RaidDurationTicks = PDYBConfig.Instance.RaidDurationTicks;
+				this.RaidElapsedTicks = PDYBConfig.Instance.RaidDurationTicks;
 
 				Main.NewText( "Pirates are raiding your town!", new Color( 175, 75, 255 ) );
 			}
@@ -24,7 +24,7 @@ namespace PiratesDemandYourBooty {
 			if( syncFromServer ) {
 				RaidStateProtocol.BroadcastFromServer( false );
 			} else {
-				this.RaidDurationTicks = 0;
+				this.RaidElapsedTicks = 0;
 				this.KillsNearTownNPC.Clear();
 
 				Main.NewText( "Pirate raid has ended!", new Color( 175, 75, 255 ) );
@@ -84,19 +84,22 @@ namespace PiratesDemandYourBooty {
 		////////////////
 
 		private void UpdateForRaid() {
-			if( Main.netMode == NetmodeID.MultiplayerClient ) {
-				return;
-			}
+			this.RaidElapsedTicks++;
 
+			// SP or server only
+			if( Main.netMode != NetmodeID.MultiplayerClient ) {
+				this.UpdateForRaid_Host();
+			}
+		}
+
+		private void UpdateForRaid_Host() {
 			this.TownNPCs = Main.npc.SafeWhere( n => n.active == true && n.townNPC ).ToList();
 
 			if( this.TownNPCs.Count == 0 ) {
 				this.EndRaid( true );
 			}
 
-			this.RaidDurationTicks++;
-
-			if( this.RaidDurationTicks >= PDYBConfig.Instance.RaidDurationTicks ) {
+			if( this.RaidElapsedTicks >= PDYBConfig.Instance.RaidDurationTicks ) {
 				this.EndRaid( true );
 			}
 		}

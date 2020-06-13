@@ -46,7 +46,7 @@ namespace PiratesDemandYourBooty {
 
 		public PirateMood Patience { get; private set; } = PirateMood.Normal;
 
-		public long RaidDurationTicks { get; private set; } = 0;
+		public long RaidElapsedTicks { get; private set; } = 0;
 
 		public long TicksSinceLastArrival { get; private set; } = 0;
 
@@ -54,7 +54,7 @@ namespace PiratesDemandYourBooty {
 
 		////
 
-		public bool IsRaiding => this.RaidDurationTicks > 0;
+		public bool IsRaiding => this.RaidElapsedTicks > 0;
 
 
 
@@ -64,8 +64,8 @@ namespace PiratesDemandYourBooty {
 			if( tag.ContainsKey("PirateDemand") ) {
 				this.PirateDemand = tag.GetLong( "PirateDemand" );
 			}
-			if( tag.ContainsKey("PirateRaidTicks") ) {
-				this.RaidDurationTicks = tag.GetLong( "PirateRaidTicks" );
+			if( tag.ContainsKey( "RaidElapsedTicks" ) ) {
+				this.RaidElapsedTicks = tag.GetLong( "RaidElapsedTicks" );
 			}
 			if( tag.ContainsKey("TicksSinceLastArrival") ) {
 				this.TicksSinceLastArrival = tag.GetLong( "TicksSinceLastArrival" );
@@ -77,7 +77,7 @@ namespace PiratesDemandYourBooty {
 
 		public void Save( TagCompound tag ) {
 			tag["PirateDemand"] = (long)this.PirateDemand;
-			tag["PirateRaidTicks"] = (long)this.RaidDurationTicks;
+			tag["RaidElapsedTicks"] = (long)this.RaidElapsedTicks;
 			tag["TicksSinceLastArrival"] = (long)this.TicksSinceLastArrival;
 			tag["TicksUntilNextArrival"] = (long)this.TicksUntilNextArrival;
 		}
@@ -86,14 +86,14 @@ namespace PiratesDemandYourBooty {
 		
 		public void NetSend( BinaryWriter writer ) {
 			writer.Write( (long)this.PirateDemand );
-			writer.Write( (long)this.RaidDurationTicks );
+			writer.Write( (long)this.RaidElapsedTicks );
 			writer.Write( (long)this.TicksSinceLastArrival );
 			writer.Write( (long)this.TicksUntilNextArrival );
 		}
 
 		public void NetReceive( BinaryReader reader ) {
 			this.PirateDemand = reader.ReadInt64();
-			this.RaidDurationTicks = reader.ReadInt64();
+			this.RaidElapsedTicks = reader.ReadInt64();
 			this.TicksSinceLastArrival = reader.ReadInt64();
 			this.TicksUntilNextArrival = reader.ReadInt64();
 		}
@@ -107,6 +107,15 @@ namespace PiratesDemandYourBooty {
 			if( this.IsRaiding ) {
 				this.UpdateForRaid();
 			}
+		}
+
+
+		////////////////
+
+		internal bool CheckAndValidateNegotiatorPresence( NPC npc ) {
+			this.TicksSinceLastArrival = 0;
+
+			return !this.IsRaiding && !Main.hardMode;
 		}
 	}
 }

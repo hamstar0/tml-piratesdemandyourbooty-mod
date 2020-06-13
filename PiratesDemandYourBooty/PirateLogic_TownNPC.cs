@@ -8,7 +8,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace PiratesDemandYourBooty {
 	partial class PirateLogic {
-		public void SetNegotiatorArrivalTime( bool postInvasion ) {
+		public void SetNextNegotiatorArrivalTime( bool postInvasion ) {
 			var config = PDYBConfig.Instance;
 
 			this.TicksSinceLastArrival = 0;

@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using HamstarHelpers.Helpers.NPCs;
 using static Terraria.ModLoader.ModContent;
 
 
@@ -78,7 +77,7 @@ namespace PiratesDemandYourBooty.NPCs {
 			this.npc.width = 18;
 			this.npc.height = 40;
 			this.npc.aiStyle = 7;
-			this.npc.damage = 10;
+			this.npc.damage = 15;
 			this.npc.defense = 15;
 			this.npc.lifeMax = 250;
 			this.npc.HitSound = SoundID.NPCHit1;
@@ -87,27 +86,6 @@ namespace PiratesDemandYourBooty.NPCs {
 			this.animationType = NPCID.Guide;
 		}
 
-		////////////////
-
-		public override bool CanTownNPCSpawn( int numTownNPCs, int money ) {
-			var logic = PirateLogic.Instance;
-
-			if( logic.IsRaiding ) {
-				return false;
-			}
-			if( numTownNPCs < PDYBConfig.Instance.NegotiatorMinimumTownNPCsForArrival ) {
-				return false;
-			}
-			if( money < PDYBConfig.Instance.NegotiatorMinimumMoneyForArrival ) {
-				return false;
-			}
-			// First 5 "minutes" of day time
-			if( !Main.dayTime || Main.time > (5 * 60 * 60) ) {
-				return false;
-			}
-
-			return logic.CanNegotiatorMoveIn();
-		}
 
 		////////////////
 
@@ -151,7 +129,12 @@ namespace PiratesDemandYourBooty.NPCs {
 		////////////////
 
 		public override bool PreAI() {
-			this.UpdateHaggleState();
+			if( PirateLogic.Instance.CheckAndValidateNegotiatorPresence(npc) ) {
+				this.UpdateHaggleState( this.npc );
+			} else {
+				PirateNegotiatorTownNPC.Exit( npc );
+				return false;
+			}
 				
 			return base.PreAI();
 		}
