@@ -36,7 +36,7 @@ namespace PiratesDemandYourBooty.NPCs {
 
 			// Remove negotiator(s)
 			foreach( NPC npc in negotiator ) {
-				PirateNegotiatorTownNPC.Exit( npc );
+				PirateNegotiatorTownNPC.Exit( npc, false );
 			}
 		}
 
@@ -57,7 +57,7 @@ namespace PiratesDemandYourBooty.NPCs {
 
 			// Remove negotiator(s)
 			foreach( NPC npc in negotiator ) {
-				PirateNegotiatorTownNPC.Exit( npc );
+				PirateNegotiatorTownNPC.Exit( npc, false );
 			}
 		}
 

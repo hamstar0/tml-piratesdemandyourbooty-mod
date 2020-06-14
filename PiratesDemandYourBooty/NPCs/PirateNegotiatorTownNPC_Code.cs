@@ -26,8 +26,12 @@ namespace PiratesDemandYourBooty.NPCs {
 		}
 
 
-		public static void Exit( NPC npc ) {
+		public static void Exit( NPC npc, bool syncFromServer ) {
 			npc.active = false;
+
+			if( syncFromServer ) {
+				NetMessage.SendData( MessageID.SyncNPC, -1, -1, null, npc.whoAmI );
+			}
 
 			// TODO: Poof!
 		}
@@ -132,7 +136,7 @@ namespace PiratesDemandYourBooty.NPCs {
 			if( PirateLogic.Instance.CheckAndValidateNegotiatorPresence(npc) ) {
 				this.UpdateHaggleState( this.npc );
 			} else {
-				PirateNegotiatorTownNPC.Exit( npc );
+				PirateNegotiatorTownNPC.Exit( npc, false );
 				return false;
 			}
 				
