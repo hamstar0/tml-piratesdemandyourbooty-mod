@@ -48,24 +48,31 @@ namespace PiratesDemandYourBooty {
 
 		////////////////
 
+		public override void EditSpawnRate( Player player, ref int spawnRate, ref int maxSpawns ) {
+			var logic = PirateLogic.Instance;
+//DebugHelpers.Print( "sr", "spawnRate: "+spawnRate+", maxSpawns: "+maxSpawns );
+			if( logic.IsRaiding && player.townNPCs > 0f && logic.ValidateRaidForPlayer(player) ) {
+				spawnRate = 600;
+				maxSpawns = 5;
+			}
+
+			base.EditSpawnRate( player, ref spawnRate, ref maxSpawns );
+		}
+
 		public override void EditSpawnPool( IDictionary<int, float> pool, NPCSpawnInfo spawnInfo ) {
 			var logic = PirateLogic.Instance;
 
-			if( !PirateLogic.Instance.IsRaiding ) {
-Main.NewText("1");
+			if( !logic.IsRaiding ) {
 				return;
 			}
 			if( !spawnInfo.playerInTown ) {
-Main.NewText("2");
 				return;
 			}
 			if( !logic.ValidateRaidForPlayer(spawnInfo.player) ) {
-Main.NewText("3");
 				return;
 			}
 
 			float average = pool.Sum( kv => kv.Value ) / (float)pool.Count;
-Main.NewText( "spawning pirates avg "+average );
 
 			pool.Clear();
 
@@ -107,6 +114,26 @@ Main.NewText( "spawning pirates avg "+average );
 					NetMessage.SendData( MessageID.SyncItem, -1, -1, null, coinWho );
 				}
 			}
+		}
+
+
+		////////////////
+
+		private int OldInvasion;
+
+		public override bool PreAI( NPC npc ) {
+			if( this.IsRaider ) {
+				this.OldInvasion = Main.invasionType;
+				Main.invasionType = 3;
+			}
+			return base.PreAI( npc );
+		}
+
+		public override void PostAI( NPC npc ) {
+			if( this.IsRaider ) {
+				Main.invasionType = this.OldInvasion;
+			}
+			base.PostAI( npc );
 		}
 	}
 }

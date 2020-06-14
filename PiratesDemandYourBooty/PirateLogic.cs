@@ -1,8 +1,10 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader.IO;
 using HamstarHelpers.Helpers.Debug;
 using static Terraria.ModLoader.ModContent;
@@ -37,7 +39,7 @@ namespace PiratesDemandYourBooty {
 
 		private IList<NPC> TownNPCs;
 
-		private IDictionary<int, int> KillsNearTownNPC = new ConcurrentDictionary<int, int>();
+		internal IDictionary<int, int> KillsNearTownNPC = new ConcurrentDictionary<int, int>();
 
 
 		////////////////
@@ -100,12 +102,44 @@ namespace PiratesDemandYourBooty {
 
 
 		////////////////
-		
+
 		internal void Update() {
 			this.UpdateForNegotiator();
 
 			if( this.IsRaiding ) {
 				this.UpdateForRaid();
+			}
+
+			if( Main.netMode != NetmodeID.Server ) {
+				this.UpdateDebugInfo();
+			}
+		}
+
+
+		////
+
+		private void UpdateDebugInfo() {
+			var config = PDYBConfig.Instance;
+			if( !config.DebugModeInfo ) {
+				return;
+			}
+
+			var logic = PirateLogic.Instance;
+
+			DebugHelpers.Print( "pirate_negotiator_info",
+				"Patience: " + logic.Patience
+				+ ", demand: " + logic.PirateDemand
+				+ ", TicksWhileNegotiatorAway: " + logic.TicksWhileNegotiatorAway
+				+ ", TicksUntilNextArrival: " + logic.TicksUntilNextArrival
+			);
+			if( logic.IsRaiding ) {
+				DebugHelpers.Print( "pirate_raid_info",
+					"Elapsed ticks: " + logic.RaidElapsedTicks
+					+ ", percent done: " + ( (float)logic.RaidElapsedTicks / (float)config.RaidDurationTicks ).ToString()
+				);
+				DebugHelpers.Print( "pirate_raid_deaths",
+					string.Join( ", ", logic.KillsNearTownNPC.Select( kv => kv.Key + ": " + kv.Value ) )
+				);
 			}
 		}
 	}

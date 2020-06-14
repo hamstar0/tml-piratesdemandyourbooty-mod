@@ -7,9 +7,13 @@ v1
 		-	When far away from the player, teleports near them (once), springing out of the ground
 -	@Test
 	-	MP
+
 	-	Raid (check timer doesn't overlap with progress bar)
 	-	Haggling
+-	F&T
+	-	Set pirate raid overlay to display only near towns
 
+	-	Set pirate deaths to only apply for one npc at a time
 -	Implement pirate "exit" fx
 -	Add raid mechanics
 	-	Add raid duration indicator

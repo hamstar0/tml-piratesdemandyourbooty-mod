@@ -41,11 +41,13 @@ namespace PiratesDemandYourBooty {
 
 		private IList<NPC> GetNearbyTownNPCs( Vector2 worldPosition ) {
 			var nearbyTownNpcs = new List<NPC>();
+			int distSqr = 96 * 16;
+			distSqr *= distSqr;
 
 			foreach( NPC townNpc in this.TownNPCs ) {
 				float testDist = Vector2.DistanceSquared( worldPosition, townNpc.Center );
 
-				if( testDist < 16384 ) {
+				if( testDist < distSqr ) {
 					nearbyTownNpcs.Add( townNpc );
 				}
 			}
@@ -55,16 +57,24 @@ namespace PiratesDemandYourBooty {
 
 		////
 
-		public void AddDeathAtNearbyTownNPC( NPC npc ) {
+		public bool AddDeathAtNearbyTownNPC( NPC npc ) {
+			var config = PDYBConfig.Instance;
 			IList<NPC> nearbyTownNpcs = this.GetNearbyTownNPCs( npc.Center );
 
 			foreach( NPC nearbyTownNpc in nearbyTownNpcs ) {
 				if( this.KillsNearTownNPC.ContainsKey( nearbyTownNpc.type ) ) {
-					this.KillsNearTownNPC[ nearbyTownNpc.type ] += 1;
+					if( this.KillsNearTownNPC[nearbyTownNpc.type] >= config.PirateRaiderKillsNearTownNPCBeforeClear ) {
+						continue;
+					}
+
+					this.KillsNearTownNPC[nearbyTownNpc.type] += 1;
+					return true;
 				} else {
 					this.KillsNearTownNPC[ nearbyTownNpc.type ] = 1;
+					return true;
 				}
 			}
+			return false;
 		}
 
 

@@ -9,7 +9,7 @@ using PiratesDemandYourBooty.NPCs;
 
 namespace PiratesDemandYourBooty.UI {
 	class UIHaggleContextComponents : UIThemedState {
-		public UIHagglePanel HagglePanel { get; private set; }
+		public UIHagglePanel HagglePanel { get; private set; } = null;
 
 
 
@@ -51,11 +51,11 @@ namespace PiratesDemandYourBooty.UI {
 		////////////////
 
 		public void OpenHaggleUI( bool offerTested ) {
-			this.HagglePanel.Open( offerTested );
+			this.HagglePanel?.Open( offerTested );
 		}
 
 		public void CloseHaggleUI() {
-			this.HagglePanel.Close();
+			this.HagglePanel?.Close();
 		}
 
 
@@ -69,7 +69,7 @@ namespace PiratesDemandYourBooty.UI {
 		////
 
 		private void UpdateHagglingUIState() {
-			if( !this.HagglePanel.IsOpen ) {
+			if( !this.HagglePanel?.IsOpen ?? true ) {
 				return;
 			}
 

@@ -7,7 +7,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace PiratesDemandYourBooty {
 	class PDYBWorld : ModWorld {
-		public static PirateLogic PirateLogic => GetInstance<PDYBWorld>().PirateLogicInstance;
+		public static PirateLogic PirateLogic => GetInstance<PDYBWorld>()?.PirateLogicInstance;
 
 
 
