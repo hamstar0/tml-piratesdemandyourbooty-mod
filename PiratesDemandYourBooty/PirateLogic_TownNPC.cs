@@ -17,6 +17,10 @@ namespace PiratesDemandYourBooty {
 			if( postInvasion ) {
 				this.TicksUntilNextArrival += config.NegotiatorAddedTicksUntilReturnAfterRaid;
 			}
+			
+			// Upgrade demands for next time
+			this.PirateDemand = (long)( config.BaseDemandIncreasePercentPerVisit * (double)this.PirateDemand );
+			this.PirateDemandVariancePercent = 1d + ((double)Main.rand.NextFloat() * config.DemandVariancePercentRange);
 		}
 
 

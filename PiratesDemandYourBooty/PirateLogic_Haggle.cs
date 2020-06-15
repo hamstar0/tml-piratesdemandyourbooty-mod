@@ -54,10 +54,10 @@ namespace PiratesDemandYourBooty {
 		public void GiveNoOffer( bool syncFromServer ) {
 			this.BeginRaid( syncFromServer );
 		}
-			
+
 
 		public void GiveFinalOffer( Player player, long offerAmount, bool syncFromServer ) {
-			HaggleAmount measure = PirateLogic.GaugeOffer( this.PirateDemand, offerAmount );
+			HaggleAmount measure = PirateLogic.GaugeOffer( this.ComputedDemand, offerAmount );
 
 			switch( measure ) {
 			case HaggleAmount.VeryHigh:
@@ -95,7 +95,7 @@ namespace PiratesDemandYourBooty {
 			}
 
 			int[] itemWhos = ItemHelpers.CreateCoins(
-				amount: (long)( (double)offerAmount * PDYBConfig.Instance.NegotiatorInterestPercent ),
+				amount: (long)( (double)offerAmount * PDYBConfig.Instance.NegotiatorReturnInterestPercent ),
 				position: player.Center
 			);
 

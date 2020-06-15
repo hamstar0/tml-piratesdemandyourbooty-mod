@@ -82,10 +82,10 @@ namespace PiratesDemandYourBooty.NPCs {
 			if( !this.OfferTested ) {
 				this.OfferTested = true;
 
-				HaggleAmount replyType = PirateLogic.GaugeOffer( logic.PirateDemand, offerAmount );
+				HaggleAmount replyType = PirateLogic.GaugeOffer( logic.ComputedDemand, offerAmount );
 				Main.npcChatText = PirateNegotiatorTownNPC.HaggleReplies[replyType];
 			} else {
-				HaggleAmount replyType = PirateLogic.GaugeOffer( logic.PirateDemand, offerAmount );
+				HaggleAmount replyType = PirateLogic.GaugeOffer( logic.ComputedDemand, offerAmount );
 				Main.npcChatText = PirateNegotiatorTownNPC.OfferReplies[ replyType ];
 
 				this.OfferAmount = offerAmount;

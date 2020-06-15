@@ -62,7 +62,7 @@ namespace PiratesDemandYourBooty.UI {
 				this.MakeOffer();
 			};
 
-			string unit = PirateLogic.GetHighestCoinTypeOfGivenDemand( logic.PirateDemand, out bool tensOf );
+			string unit = PirateLogic.GetHighestCoinTypeOfGivenDemand( logic.ComputedDemand, out bool tensOf );
 			string range = tensOf ? "10-99" : "0-10";
 
 			var titleElem = new UIThemedText( this.Theme, false, "Pirate hints at "+range+" "+unit );

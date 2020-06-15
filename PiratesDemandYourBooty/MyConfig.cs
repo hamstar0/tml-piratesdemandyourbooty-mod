@@ -29,9 +29,17 @@ namespace PiratesDemandYourBooty {
 
 		////
 
+		[DefaultValue( 0.25d )]
+		public double BaseDemandIncreasePercentPerVisit { get; set; } = 0.25d;
+
+		[DefaultValue( 3d )]
+		public double DemandVariancePercentRange { get; set; } = 3d;
+
+		//
+
 		[DefaultValue( 0.15f )]
 		[CustomModConfigItem( typeof(MyFloatInputElement) )]
-		public float NegotiatorInterestPercent { get; set; } = 0.15f;
+		public float NegotiatorReturnInterestPercent { get; set; } = 0.15f;
 
 		////
 		
@@ -44,8 +52,8 @@ namespace PiratesDemandYourBooty {
 		[DefaultValue( 60 * 60 * 24 * 3 )]	// 3 "days"
 		public int NegotiatorMinimumTicksUntilReturn { get; set; } = 60 * 60 * 24 * 3;
 
-		[DefaultValue( 60 * 60 * 24 * 2 )]	// +2 "days"
-		public int NegotiatorAddedTicksUntilReturnAfterRaid { get; set; } = 60 * 60 * 24 * 2;
+		[DefaultValue( 60 * 60 * 24 * 1 )]	// +1 "days"
+		public int NegotiatorAddedTicksUntilReturnAfterRaid { get; set; } = 60 * 60 * 24 * 1;
 
 		////
 		

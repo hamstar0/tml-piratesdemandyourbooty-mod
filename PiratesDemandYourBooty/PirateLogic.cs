@@ -44,9 +44,15 @@ namespace PiratesDemandYourBooty {
 
 		////////////////
 
+		public PirateMood Patience { get; private set; } = PirateMood.Normal;
+
+		//
+
 		public long PirateDemand { get; private set; } = 10 * 100 * 100;    // 10 gold, initially
 
-		public PirateMood Patience { get; private set; } = PirateMood.Normal;
+		public double PirateDemandVariancePercent { get; private set; } = 1d;    // From 100-400%
+
+		//
 
 		public long RaidElapsedTicks { get; private set; } = 0;
 
@@ -59,12 +65,20 @@ namespace PiratesDemandYourBooty {
 		public bool IsRaiding => this.RaidElapsedTicks > 0;
 
 
+		////////////////
+		
+		public long ComputedDemand => (long)((double)this.PirateDemand * this.PirateDemandVariancePercent);
+
+
 
 		////////////////
 
 		public void Load( TagCompound tag ) {
 			if( tag.ContainsKey("PirateDemand") ) {
 				this.PirateDemand = tag.GetLong( "PirateDemand" );
+			}
+			if( tag.ContainsKey( "PirateDemandVariancePercent" ) ) {
+				this.PirateDemandVariancePercent = tag.GetDouble( "PirateDemandVariancePercent" );
 			}
 			if( tag.ContainsKey( "RaidElapsedTicks" ) ) {
 				this.RaidElapsedTicks = tag.GetLong( "RaidElapsedTicks" );
@@ -79,6 +93,7 @@ namespace PiratesDemandYourBooty {
 
 		public void Save( TagCompound tag ) {
 			tag["PirateDemand"] = (long)this.PirateDemand;
+			tag["PirateDemandVariancePercent"] = (double)this.PirateDemandVariancePercent;
 			tag["RaidElapsedTicks"] = (long)this.RaidElapsedTicks;
 			tag["TicksWhileNegotiatorAway"] = (long)this.TicksWhileNegotiatorAway;
 			tag["TicksUntilNextArrival"] = (long)this.TicksUntilNextArrival;
@@ -88,6 +103,7 @@ namespace PiratesDemandYourBooty {
 		
 		public void NetSend( BinaryWriter writer ) {
 			writer.Write( (long)this.PirateDemand );
+			writer.Write( (double)this.PirateDemandVariancePercent );
 			writer.Write( (long)this.RaidElapsedTicks );
 			writer.Write( (long)this.TicksWhileNegotiatorAway );
 			writer.Write( (long)this.TicksUntilNextArrival );
@@ -95,6 +111,7 @@ namespace PiratesDemandYourBooty {
 
 		public void NetReceive( BinaryReader reader ) {
 			this.PirateDemand = reader.ReadInt64();
+			this.PirateDemandVariancePercent = reader.ReadInt64();
 			this.RaidElapsedTicks = reader.ReadInt64();
 			this.TicksWhileNegotiatorAway = reader.ReadInt64();
 			this.TicksUntilNextArrival = reader.ReadInt64();
@@ -128,7 +145,9 @@ namespace PiratesDemandYourBooty {
 
 			DebugHelpers.Print( "pirate_negotiator_info",
 				"Patience: " + logic.Patience
-				+ ", demand: " + logic.PirateDemand
+				+ ", base demand: " + logic.PirateDemand
+				+ ", +demand%: " + logic.PirateDemandVariancePercent
+				+ ", computed demand: " + logic.ComputedDemand
 				+ ", TicksWhileNegotiatorAway: " + logic.TicksWhileNegotiatorAway
 				+ ", TicksUntilNextArrival: " + logic.TicksUntilNextArrival
 			);

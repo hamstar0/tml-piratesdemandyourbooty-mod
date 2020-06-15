@@ -1,6 +1,14 @@
 v1
 -	@Test MP
+-	@Test underground houses during raid
+-	Improve patience with higher demands
+-	Make pirate lose patience with an offer lower than the test offer
+-	Give better range hint
 
+-	Improve successive demands
+	-	@Plan
+		-	Add demand variance up to 300% (does not affect base amount)
+		-	Set base demand amount to increase 25%
 -	Yield raid to invasions and bosses
 -	Implement 'Pirate Ambusher'
 	-	Spawn ambusher during raid and normal pirate invasion
