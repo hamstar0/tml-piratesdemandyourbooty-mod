@@ -10,7 +10,7 @@ using HamstarHelpers.Helpers.Items;
 
 namespace PiratesDemandYourBooty {
 	class PDYBNPC : GlobalNPC {
-		private bool IsRaider = false;
+		internal bool IsRaider = false;
 
 
 		////////////////
@@ -60,15 +60,7 @@ namespace PiratesDemandYourBooty {
 		}
 
 		public override void EditSpawnPool( IDictionary<int, float> pool, NPCSpawnInfo spawnInfo ) {
-			var logic = PirateLogic.Instance;
-
-			if( !logic.IsRaiding ) {
-				return;
-			}
-			if( !spawnInfo.playerInTown ) {
-				return;
-			}
-			if( !logic.ValidateRaidForPlayer(spawnInfo.player) ) {
+			if( !PirateLogic.Instance.IsRaidingForMe(spawnInfo.player) ) {
 				return;
 			}
 

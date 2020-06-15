@@ -48,11 +48,19 @@ namespace PiratesDemandYourBooty {
 		public int NegotiatorAddedTicksUntilReturnAfterRaid { get; set; } = 60 * 60 * 24 * 2;
 
 		////
-
+		
 		[DefaultValue( 60 * 60 * 15 )]	// 15 minutes
 		public int RaidDurationTicks { get; set; } = 60 * 60 * 15;
 
 		[DefaultValue( 15 )]
 		public int PirateRaiderKillsNearTownNPCBeforeClear { get; set; } = 15;
+
+		////
+
+		[DefaultValue( -16 )]
+		public int RaidTimerPositionX { get; set; } = -16;
+
+		[DefaultValue( -32 )]
+		public int RaidTimerPositionY { get; set; } = -32;
 	}
 }

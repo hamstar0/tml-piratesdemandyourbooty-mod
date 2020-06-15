@@ -40,30 +40,35 @@ namespace PiratesDemandYourBooty {
 
 			GameInterfaceDrawMethod raidUI = () => {
 				var logic = PirateLogic.Instance;
-				if( !logic.IsRaiding ) {
-					return true;
-				}
-				if( Main.LocalPlayer.townNPCs <= 0f ) {
+				if( Main.playerInventory || !logic.IsRaidingForMe(Main.LocalPlayer) ) {
 					return true;
 				}
 
-				long remainingSeconds = PDYBConfig.Instance.RaidDurationTicks - logic.RaidElapsedTicks;
+				var config = PDYBConfig.Instance;
+				long remainingSeconds = config.RaidDurationTicks - logic.RaidElapsedTicks;
 				remainingSeconds /= 60;
 				long remainingMinutes = remainingSeconds / 60;
 				remainingSeconds %= 60;
 				string msg = "Pirate raid time left: "+remainingMinutes.ToString("00")+":"+remainingSeconds.ToString("00");
-				string msgAlt = "Pirate raid time left: 00:00";
 
+				string msgAlt = "Pirate raid time left: 00:00";
+				Vector2 strDim = Main.fontMouseText.MeasureString( msgAlt );
+				float scale = 1f;
+				
 				Utils.DrawBorderStringFourWay(
 					sb: Main.spriteBatch,
 					font: Main.fontMouseText,
 					text: msg,
-					x: (Main.screenWidth / 2),
-					y: Main.screenHeight - 160,
+					x: config.RaidTimerPositionX >= 0
+						? config.RaidTimerPositionX
+						: (Main.screenWidth - (int)(strDim.X * scale)) + config.RaidTimerPositionX,
+					y: config.RaidTimerPositionY >= 0
+						? config.RaidTimerPositionY
+						: Main.screenHeight + config.RaidTimerPositionY,
 					textColor: Color.Yellow,
 					borderColor: Color.Black,
-					origin: Main.fontMouseText.MeasureString( msgAlt ) * 0.5f,
-					scale: 1f
+					origin: default(Vector2),
+					scale: scale
 				);
 
 				return true;

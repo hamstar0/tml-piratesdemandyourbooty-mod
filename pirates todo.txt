@@ -1,10 +1,18 @@
 v1
 -	@Test MP
+-	Yield raid to invasions and bosses
 -	Implement 'Pirate Ambusher'
 	-	Make attacks cause poison
-	-	Add "ambush"
-	-	Setup NPC
 
+	-	Add "ambush"
+		-	Sync teleport
+		-	Add ambush teleport (gore 825-7, 861-2)
+		-	Add AI trigger
+		-	@Plan
+			-	Avoid teleporting directly onto the target
+			-	Show a smoke puff at target 1s before teleport occurs
+			-	When 36 tiles away from target, teleport at random near them (10 tile radius)
+	-	Setup NPC
 	-	@Plan
 		-	When far away from the player, teleports near them (once), springing out of the ground
 -	Added commands to force spawn and despawn negotiator

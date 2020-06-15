@@ -11,6 +11,25 @@ using PiratesDemandYourBooty.NetProtocols;
 
 namespace PiratesDemandYourBooty {
 	partial class PirateLogic {
+		public bool IsRaidingForMe( Player player ) {
+			if( Main.bloodMoon || Main.eclipse || Main.pumpkinMoon || Main.snowMoon || Main.invasionType > 0 ) {
+				return false;
+			}
+			if( !this.IsRaiding ) {
+				return false;
+			}
+			if( player.townNPCs <= 0f ) {
+				return false;
+			}
+			if( !this.ValidateRaidForPlayer( player ) ) {
+				return false;
+			}
+			return true;
+		}
+
+
+		////////////////
+
 		public void BeginRaid( bool syncFromServer ) {
 			if( Main.netMode != NetmodeID.SinglePlayer && syncFromServer ) {
 				if( Main.netMode == NetmodeID.Server ) {
@@ -41,7 +60,7 @@ namespace PiratesDemandYourBooty {
 
 		private IList<NPC> GetNearbyTownNPCs( Vector2 worldPosition ) {
 			var nearbyTownNpcs = new List<NPC>();
-			int distSqr = 96 * 16;
+			int distSqr = 72 * 16;
 			distSqr *= distSqr;
 
 			foreach( NPC townNpc in this.TownNPCs ) {
