@@ -42,7 +42,7 @@ namespace PiratesDemandYourBooty {
 				return;
 			}
 
-			PirateNegotiatorTownNPC.AllDealingsFinished_FromServer( null, 0 );
+			PirateNegotiatorTownNPC.AllDealingsFinished_FromServer( null, 0, 0 );
 		}
 
 
