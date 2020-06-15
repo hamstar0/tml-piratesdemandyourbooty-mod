@@ -62,5 +62,13 @@ namespace PiratesDemandYourBooty {
 
 		[DefaultValue( -32 )]
 		public int RaidTimerPositionY { get; set; } = -32;
+
+		////
+
+		[DefaultValue( 20 * 60 )]
+		public int PirateRuffianAmbushCooldownDurationTicks { get; set; } = 20 * 60;
+
+		[DefaultValue( 2 * 60 )]
+		public int PirateRuffianAmbushBuildupDurationTicks { get; set; } = 2 * 60;
 	}
 }

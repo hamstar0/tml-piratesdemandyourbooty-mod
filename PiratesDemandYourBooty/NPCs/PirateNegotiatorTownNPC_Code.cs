@@ -1,4 +1,5 @@
 using System;
+using HamstarHelpers.Helpers.Fx;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -9,6 +10,25 @@ using static Terraria.ModLoader.ModContent;
 namespace PiratesDemandYourBooty.NPCs {
 	[AutoloadHead]
 	public partial class PirateNegotiatorTownNPC : ModNPC {
+		public static void EmitSmoke( Vector2 pos, bool fake ) {
+			ParticleFxHelpers.MakeDustCloud(
+				position: fake
+					? pos
+					: pos - new Vector2( 16f ),
+				quantity: 1,
+				sprayAmount: 0.3f,
+				scale: fake
+					? 0.5f
+					: 2f
+			);
+
+			if( !fake ) {
+				PirateNegotiatorTownNPC.EmitSmoke( pos, true );
+			}
+		}
+
+		////////////////
+
 		public static NPC GetNearbyNegotiator( Player player ) {
 			int negotType = NPCType<PirateNegotiatorTownNPC>();
 
@@ -33,7 +53,7 @@ namespace PiratesDemandYourBooty.NPCs {
 				NetMessage.SendData( MessageID.SyncNPC, -1, -1, null, npc.whoAmI );
 			}
 
-			// TODO: Poof!
+			PirateNegotiatorTownNPC.EmitSmoke( npc.Center, false );
 		}
 
 

@@ -5,12 +5,30 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using HamstarHelpers.Helpers.DotNET;
-using HamstarHelpers.Helpers.DotNET.Extensions;
 using PiratesDemandYourBooty.NetProtocols;
 
 
 namespace PiratesDemandYourBooty {
 	partial class PirateLogic {
+		private bool IsTownRaidable() {
+			if( this.KillsNearTownNPC.Count < this.TownNPCs.Count ) {
+				return true;
+			}
+
+			foreach( NPC townNpc in this.TownNPCs ) {
+				if( !this.KillsNearTownNPC.ContainsKey( townNpc.type ) ) {
+					return true;
+				}
+				if( this.KillsNearTownNPC[townNpc.type] < PDYBConfig.Instance.PirateRaiderKillsNearTownNPCBeforeClear ) {
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		////
+
 		public bool IsRaidingForMe( Player player ) {
 			if( Main.bloodMoon || Main.eclipse || Main.pumpkinMoon || Main.snowMoon || Main.invasionType > 0 ) {
 				return false;
@@ -21,7 +39,7 @@ namespace PiratesDemandYourBooty {
 			if( player.townNPCs <= 0f ) {
 				return false;
 			}
-			if( !this.ValidateRaidForPlayer( player ) ) {
+			if( !this.ValidateRaidForPlayer(player) ) {
 				return false;
 			}
 			return true;
@@ -137,23 +155,6 @@ namespace PiratesDemandYourBooty {
 			if( !this.IsTownRaidable() ) {
 				this.EndRaid( Main.netMode == NetmodeID.Server );
 			}
-		}
-
-
-		////
-
-		private bool IsTownRaidable() {
-			if( this.KillsNearTownNPC.Count < this.TownNPCs.Count ) {
-				return true;
-			}
-
-			foreach( (int townNpcType, int pirateDeaths) in this.KillsNearTownNPC ) {
-				if( pirateDeaths < PDYBConfig.Instance.PirateRaiderKillsNearTownNPCBeforeClear ) {
-					return true;
-				}
-			}
-
-			return false;
 		}
 	}
 }

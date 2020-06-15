@@ -61,14 +61,10 @@ namespace PiratesDemandYourBooty {
 		////////////////
 		
 		public override void EditSpawnRate( Player player, ref int spawnRate, ref int maxSpawns ) {
-			var logic = PirateLogic.Instance;
-//DebugHelpers.Print( "sr", "spawnRate: "+spawnRate+", maxSpawns: "+maxSpawns );
-			if( logic.IsRaiding && player.townNPCs > 0f && logic.ValidateRaidForPlayer(player) ) {
-				spawnRate = 300;
+			if( PirateLogic.Instance.IsRaidingForMe(player) ) {
+				spawnRate = 200;
 				maxSpawns = 5;
 			}
-
-			base.EditSpawnRate( player, ref spawnRate, ref maxSpawns );
 		}
 
 

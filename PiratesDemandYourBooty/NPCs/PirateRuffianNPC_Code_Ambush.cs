@@ -23,6 +23,10 @@ namespace PiratesDemandYourBooty.NPCs {
 					? 0.5f
 					: 2f
 			);
+
+			if( !fake ) {
+				PirateRuffianNPC.EmitSmoke( pos, true );
+			}
 		}
 
 		////////////////
@@ -72,7 +76,7 @@ namespace PiratesDemandYourBooty.NPCs {
 
 			if( this.AmbushCooldownTimer == 0 ) {
 				if( this.CanAmbush(target, false) ) {
-					this.AmbushCooldownTimer = 60 * 20; // 20 seconds
+					this.AmbushCooldownTimer = PDYBConfig.Instance.PirateRuffianAmbushCooldownDurationTicks; // 20 seconds
 					this.BeginAmbushAction( target );
 				}
 			} else {
@@ -119,9 +123,9 @@ namespace PiratesDemandYourBooty.NPCs {
 
 
 		////////////////
-
+		
 		private void BeginAmbushAction( Entity target ) {
-			this.AmbushRunTimer = 90;
+			this.AmbushRunTimer = PDYBConfig.Instance.PirateRuffianAmbushBuildupDurationTicks;
 			PirateRuffianNPC.EmitSmoke( this.npc.Center, false );
 		}
 
