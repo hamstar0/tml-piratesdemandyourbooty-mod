@@ -38,13 +38,13 @@ namespace PiratesDemandYourBooty.NPCs {
 
 		public static IReadOnlyList<string> Chats { get; private set; } = new List<string> {
 			"Stumble upon some booty ye be not wanting to share wi' our jolly crew? Say it ain't so!",
-			"Say, those be some mighty fine pickins ye've chanced upon. Don't be mindin' us partakin'.",
-			"A fine establishment ye be hole-in up in, but me sea legs witherin' up on this dry turf. Ye catch me drift?",
+			//"Say, those be some fine pickins ye've chanced upon. Don't mindin' us partakin'.",
+			"A fine establishment ye be hole-in up in, but me sea legs be witherin' up on this dry turf. Catch me drift?",
 			"Spare a copper or two for a hungry sea traveler? Hehehe!",
 			"Though ye get used to the scurvy afters a while, sometimes a nice juicy apple is worth more than a handful o' dubloons.",
 			"Spinach? Pffeh! Gives us some fresh fish. Raw and wriggling! Ye keep yer nasty green baby food.",
 			"T'would almost be a shame dispensin' precious gunpowder to attain our due. Almost.",
-			"Yaargh!"
+			"Yarrrr!"
 		}.AsReadOnly();
 
 		public static IDictionary<PirateMood, string> Demands { get; } = new Dictionary<PirateMood, string> {
@@ -61,18 +61,18 @@ namespace PiratesDemandYourBooty.NPCs {
 				PirateMood.Normal, "  Ahoy thar, matey! A swell day it is!"
 					+ " I come on behalf of me shipmates to beleager ye fer a humble donation."
 					+ " T'would be a shame if me mates had to leave empty handed..."
-					+ "\n  Don't thinkin' we be all greed n' huff. We've donors from all abouts, and we likes to treat 'em fair-like."
-					+ " If'n ye be the most generous of the lot, ye'll keep yer booty, with interest!"
+					+ "\n  Don't thinkin' we be all greed n' huff. We 've donors from all abouts, and we likes to treat 'em fair-like."
+					+ " If'n ye be th' most generous of the lot, ye'll keep yer booty, with interest!"
 					+ "\n  Whilst awaitin' yer reply, I be layin' up me sea legs hereabouts until the next sunrise."
 			},
 			{
-				PirateMood.Impatient, "Now see here, friend. We be havin' a hard time o' the sea farin' life."
-					+ " Surely ye must find it in yer heart to spot us scurvy sea dogs a wee pitance or two."
+				PirateMood.Impatient, "See here, friend. We be havin' a hard time o' th' sea farin' life."
+					+ " Surely ye'll find it in yer heart to spot us scurvy sea dogs a wee pitance or two."
 					+ " I gives ye til' another sunrise to think it over."
 			},
 			{
 				PirateMood.Menacing, "Yarr! I be more than generous leavin' ye breadth fer settlin' yer doubtin' noodle."
-					+ " We haven't time fer ye t' be runnin' a rig on us poor blokes."
+					+ " We haven't time fer ye t' be runnin' a rig on us poor, weary travelers."
 					+ " Ye gots one more sunrise. Savvy?"
 			}
 		};
@@ -88,12 +88,14 @@ namespace PiratesDemandYourBooty.NPCs {
 
 
 		public static IDictionary<HaggleAmount, string> OfferReplies { get; } = new Dictionary<HaggleAmount, string> {
-			{ HaggleAmount.VeryHigh, "Hohohoho! Much obliged t' ye! Ye be have'n it back, as promised. Let no man say we ain't pirates o' our word!" },
-			{ HaggleAmount.High, "Pleasure doin' business wit' ye! Ye be have'n it back, as promised. Let no man say we ain't pirates o' our word!" },
-			{ HaggleAmount.Good, "'Tis acceptable. Ye be have'n it back, as promised. Let no man say we ain't pirates o' our word!" },
+			{ HaggleAmount.VeryHigh, "Hohohoho! Much obliged t' ye! Ye be have'n it back, as promised. Let no man say we ain't folks o' our word!" },
+			{ HaggleAmount.High, "Pleasure doin' business wit' ye! Ye be have'n it back, as promised. Let no man say we ain't folks o' our word!" },
+			{ HaggleAmount.Good, "'Tis acceptable. Ye be have'n it back, as promised. Let no man say we ain't folks o' our word!" },
 			{ HaggleAmount.Low, "Arrr! No good! I be takin' what you got, but ye best nah be as stingy th' next time." },
-			{ HaggleAmount.TooLow, "Scupper that! 'Tis an insult jus' t' look at. I suppose'n we jus' take our due th' hard way, then. Unhand yer booty." },
+			{ HaggleAmount.TooLow, "Scupper that! 'Tis an insult jus' t' look at. I suppose we be taking our due th' hard way, then. Unhand yer booty." },
 			//{ HaggleReplyType.TooLow, "No sense o' charity? Mayhaps we take some o' the burden off o' ye. Unhand yer booty." },
 		};
+
+		public static string OfferReduceReply { get; } = "Arr! Thet be less than what came before. Ye best not be holdin' out on us, now.";
 	}
 }

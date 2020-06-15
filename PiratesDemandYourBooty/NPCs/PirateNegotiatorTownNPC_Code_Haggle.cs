@@ -11,20 +11,20 @@ using static Terraria.ModLoader.ModContent;
 
 namespace PiratesDemandYourBooty.NPCs {
 	public partial class PirateNegotiatorTownNPC : ModNPC {
-		public static void AllDealingsFinished_FromLocal( long offerAmount ) {
+		public static void AllDealingsFinished_FromLocal( long offerTested, long offerAmount ) {
 			if( Main.netMode == NetmodeID.MultiplayerClient ) {
-				DemandReplyProtocol.BroadcastFromClient( offerAmount );
+				DemandReplyProtocol.BroadcastFromClient( offerTested, offerAmount );
 			} else if( Main.netMode == NetmodeID.SinglePlayer ) {
-				PirateNegotiatorTownNPC.AllDealingsFinished_ToClient( Main.LocalPlayer, offerAmount );
+				PirateNegotiatorTownNPC.AllDealingsFinished_ToClient( Main.LocalPlayer, offerTested, offerAmount );
 			}
 		}
 
 		
-		public static void AllDealingsFinished_ToClient( Player player, long offerAmount ) {
+		public static void AllDealingsFinished_ToClient( Player player, long offerTested, long offerAmount ) {
 			var logic = PirateLogic.Instance;
 
 			if( player != null && offerAmount > 0 ) {
-				logic.GiveFinalOffer( player, offerAmount, false );
+				logic.GiveFinalOffer( player, offerTested, offerAmount, false );
 			} else {
 				logic.GiveNoOffer( false );
 			}
@@ -41,11 +41,11 @@ namespace PiratesDemandYourBooty.NPCs {
 		}
 
 
-		public static void AllDealingsFinished_FromServer( Player player, long offerAmount ) {
+		public static void AllDealingsFinished_FromServer( Player player, long offerTested, long offerAmount ) {
 			var logic = PirateLogic.Instance;
 
 			if( player != null && offerAmount > 0 ) {
-				logic.GiveFinalOffer( player, offerAmount, true );
+				logic.GiveFinalOffer( player, offerTested, offerAmount, true );
 			} else {
 				logic.GiveNoOffer( true );
 			}
@@ -68,7 +68,7 @@ namespace PiratesDemandYourBooty.NPCs {
 		private void UpdateHaggleState( NPC npc ) {
 			if( Main.netMode != NetmodeID.Server ) {
 				if( this.HagglingDone && Main.npcChatText == "" ) {
-					PirateNegotiatorTownNPC.AllDealingsFinished_FromLocal( this.OfferAmount );
+					PirateNegotiatorTownNPC.AllDealingsFinished_FromLocal( this.OfferTested, this.OfferAmount );
 				}
 			}
 		}
@@ -79,14 +79,18 @@ namespace PiratesDemandYourBooty.NPCs {
 		public bool GiveOffer( long offerAmount ) {
 			var logic = PirateLogic.Instance;
 
-			if( !this.OfferTested ) {
-				this.OfferTested = true;
+			if( this.OfferTested == -1 ) {
+				this.OfferTested = offerAmount;
 
 				HaggleAmount replyType = PirateLogic.GaugeOffer( logic.ComputedDemand, offerAmount );
 				Main.npcChatText = PirateNegotiatorTownNPC.HaggleReplies[replyType];
 			} else {
 				HaggleAmount replyType = PirateLogic.GaugeOffer( logic.ComputedDemand, offerAmount );
 				Main.npcChatText = PirateNegotiatorTownNPC.OfferReplies[ replyType ];
+
+				if( this.OfferTested > offerAmount ) {
+					Main.npcChatText += "\n "+PirateNegotiatorTownNPC.OfferReduceReply;
+				}
 
 				this.OfferAmount = offerAmount;
 			}

@@ -9,13 +9,14 @@ using static Terraria.ModLoader.ModContent;
 
 namespace PiratesDemandYourBooty.NetProtocols {
 	class DemandReplyProtocol : PacketProtocolBroadcast {
-		public static void BroadcastFromClient( long offerAmount ) {
+		public static void BroadcastFromClient( long offerTested, long offerAmount ) {
 			if( Main.netMode != NetmodeID.MultiplayerClient ) {
 				throw new ModHelpersException( "Not client" );
 			}
 
 			var protocol = new DemandReplyProtocol {
 				WhoAmI = Main.myPlayer,
+				OfferTested = offerTested,
 				OfferAmount = offerAmount
 			};
 			protocol.SendToServer( true );
@@ -38,6 +39,7 @@ namespace PiratesDemandYourBooty.NetProtocols {
 		////////////////
 
 		public int WhoAmI;
+		public long OfferTested;
 		public long OfferAmount;
 
 
@@ -50,11 +52,11 @@ namespace PiratesDemandYourBooty.NetProtocols {
 		////////////////
 
 		protected override void ReceiveOnClient() {
-			PirateNegotiatorTownNPC.AllDealingsFinished_ToClient( Main.player[this.WhoAmI], this.OfferAmount );
+			PirateNegotiatorTownNPC.AllDealingsFinished_ToClient( Main.player[this.WhoAmI], this.OfferTested, this.OfferAmount );
 		}
 
 		protected override void ReceiveOnServer( int fromWho ) {
-			PirateNegotiatorTownNPC.AllDealingsFinished_FromServer( Main.player[this.WhoAmI], this.OfferAmount );
+			PirateNegotiatorTownNPC.AllDealingsFinished_FromServer( Main.player[this.WhoAmI], this.OfferTested, this.OfferAmount );
 		}
 	}
 }

@@ -56,12 +56,40 @@ namespace PiratesDemandYourBooty {
 		}
 
 
-		public void GiveFinalOffer( Player player, long offerAmount, bool syncFromServer ) {
+		public void GiveFinalOffer( Player player, long offerTested, long offerAmount, bool syncFromServer ) {
 			HaggleAmount measure = PirateLogic.GaugeOffer( this.ComputedDemand, offerAmount );
+
+			// Testing for lower amounts lowers negotiator's patience
+			if( offerTested > offerAmount ) {
+				if( measure != HaggleAmount.VeryHigh && measure != HaggleAmount.High ) {
+					switch( this.Patience ) {
+					case PirateMood.Normal:
+						this.Patience = PirateMood.Impatient;
+						break;
+					case PirateMood.Impatient:
+						this.Patience = PirateMood.Menacing;
+						break;
+					case PirateMood.Menacing:
+						//this.BeginRaid( syncFromServer );
+						break;
+					}
+				}
+			}
 
 			switch( measure ) {
 			case HaggleAmount.VeryHigh:
 			case HaggleAmount.High:
+				switch( this.Patience ) {
+				case PirateMood.Impatient:
+					this.Patience = PirateMood.Normal;
+					break;
+				case PirateMood.Menacing:
+					this.Patience = PirateMood.Impatient;
+					break;
+				}
+				this.GiveGoodOffer( player, offerAmount, syncFromServer );
+				break;
+
 			case HaggleAmount.Good:
 				this.GiveGoodOffer( player, offerAmount, syncFromServer );
 				break;
@@ -81,6 +109,7 @@ namespace PiratesDemandYourBooty {
 					break;
 				}
 				break;
+
 			case HaggleAmount.TooLow:
 				this.BeginRaid( syncFromServer );
 				break;

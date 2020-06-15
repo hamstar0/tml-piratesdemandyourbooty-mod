@@ -62,7 +62,7 @@ namespace PiratesDemandYourBooty.NPCs {
 
 		private bool HasFirstChat = false;
 
-		private bool OfferTested = false;
+		private long OfferTested = -1;
 
 		private long OfferAmount = -1;
 

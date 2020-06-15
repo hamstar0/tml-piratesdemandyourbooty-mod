@@ -39,7 +39,7 @@ namespace PiratesDemandYourBooty.NPCs {
 				PirateMood patience = PirateLogic.Instance.Patience;
 				Main.npcChatText = PirateNegotiatorTownNPC.Demands[ patience ];
 			} else {
-				PDYBMod.Instance.UIContextComponents.OpenHaggleUI( this.OfferTested );
+				PDYBMod.Instance.UIContextComponents.OpenHaggleUI( this.OfferTested >= 0 );
 				Main.npcChatText = "";
 				//Main.LocalPlayer.talkNPC = -1;
 			}
