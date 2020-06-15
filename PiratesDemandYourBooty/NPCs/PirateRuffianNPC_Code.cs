@@ -1,10 +1,8 @@
 using System;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using HamstarHelpers.Helpers.Debug;
-using HamstarHelpers.Helpers.Fx;
 using static Terraria.ModLoader.ModContent;
 
 
@@ -36,9 +34,9 @@ namespace PiratesDemandYourBooty.NPCs {
 		public override void SetDefaults() {
 			this.npc.width = 18;
 			this.npc.height = 40;
-			this.npc.damage = 35;
-			this.npc.defense = 17;
-			this.npc.lifeMax = 300;
+			this.npc.damage = 30;	//35
+			this.npc.defense = 14;	//16
+			this.npc.lifeMax = 250;	//300
 			this.npc.HitSound = SoundID.NPCHit1;
 			this.npc.DeathSound = SoundID.NPCDeath1;
 			this.npc.value = 800f;
@@ -63,25 +61,30 @@ namespace PiratesDemandYourBooty.NPCs {
 			return SpawnCondition.Pirates.Chance;
 		}
 
-		public override void NPCLoot() {
-			int itemWho = Item.NewItem( this.npc.getRect(), ItemID.PoisonedKnife, 99 );
-			if( Main.netMode == NetmodeID.Server ) {
-				NetMessage.SendData( MessageID.SyncItem, -1, -1, null, itemWho );
-			}
+
+		////////////////
+
+		public override void OnHitPlayer( Player target, int damage, bool crit ) {
+			target.AddBuff( BuffID.Poisoned, 5 * 60 );
 		}
 
 
 		////////////////
-		
+
 		public override bool PreAI() {
+			Player target = null;
+
 			if( this.npc.HasPlayerTarget ) {
-				Player target = Main.player[this.npc.target];
-				if( target?.active == true && !target.dead ) {
-					this.RunAmbushAI();
+				target = Main.player[ this.npc.target ];
+				if( target?.active != true || target.dead ) {
+					target = null;
 				}
 			}
 
-//DebugHelpers.Print("ai", "ai: "+string.Join(", ",this.npc.ai)+", localAi: "+string.Join(", ",this.npc.localAI));
+			this.RunAmbushAI( target );
+
+//DebugHelpers.Print("ai", "ai: "+string.Join(", ",this.npc.ai)
+//	+", localAi: "+string.Join(", ",this.npc.localAI));
 			return base.PreAI();
 		}
 	}

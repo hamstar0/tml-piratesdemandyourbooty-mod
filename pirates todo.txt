@@ -2,8 +2,9 @@ v1
 -	@Test MP
 -	Yield raid to invasions and bosses
 -	Implement 'Pirate Ambusher'
-	-	Make attacks cause poison
+	-	Spawn ambusher during raid and normal pirate invasion
 
+	-	Make attacks cause poison
 	-	Add "ambush"
 		-	Sync teleport
 		-	Add ambush teleport (gore 825-7, 861-2)

@@ -80,10 +80,16 @@ namespace PiratesDemandYourBooty {
 		////////////////
 		
 		public override bool PreNPCLoot( NPC npc ) {
-			if( this.IsRaider ) {
+			if( !this.IsRaider ) {
+				return base.PreNPCLoot( npc );
+			}
+
+			var logic = PirateLogic.Instance;
+
+			if( logic.IsRaiding ) {
 				if( Main.netMode != NetmodeID.MultiplayerClient ) {
 					this.DropCoins( npc, true );
-					PirateLogic.Instance.AddDeathAtNearbyTownNPC( npc );
+					logic.AddDeathAtNearbyTownNPC( npc );
 				}
 
 				return false;

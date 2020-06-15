@@ -37,7 +37,7 @@ namespace PiratesDemandYourBooty {
 
 		private bool WasDaySinceLastCheck = true;
 
-		private IList<NPC> TownNPCs;
+		private IList<NPC> TownNPCs = new List<NPC>();
 
 		internal IDictionary<int, int> KillsNearTownNPC = new ConcurrentDictionary<int, int>();
 
