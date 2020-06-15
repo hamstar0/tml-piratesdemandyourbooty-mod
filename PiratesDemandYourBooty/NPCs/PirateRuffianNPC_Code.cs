@@ -51,15 +51,18 @@ namespace PiratesDemandYourBooty.NPCs {
 			this.bannerItem = Item.BannerToItem( this.banner );
 
 			var mynpc = this.npc.GetGlobalNPC<PDYBNPC>();
-			mynpc.IsRaider = true;
+			mynpc.SetPirateRaider( this.npc );
 		}
 
 
 		////////////////
 
-		public override float SpawnChance( NPCSpawnInfo spawnInfo ) {
+		/*public override float SpawnChance( NPCSpawnInfo spawnInfo ) {
+			if( PirateLogic.Instance.IsRaidingForMe(spawnInfo.player) ) {
+				return SpawnCondition.TownCritter.Chance;
+			}
 			return SpawnCondition.Pirates.Chance;
-		}
+		}*/
 
 
 		////////////////

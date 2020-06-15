@@ -6,6 +6,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using HamstarHelpers.Helpers.Debug;
 using HamstarHelpers.Helpers.Items;
+using PiratesDemandYourBooty.NPCs;
+using static Terraria.ModLoader.ModContent;
 
 
 namespace PiratesDemandYourBooty {
@@ -22,13 +24,6 @@ namespace PiratesDemandYourBooty {
 		////////////////
 
 		public override void SetDefaults( NPC npc ) {
-			if( Main.hardMode ) {
-				return;
-			}
-			if( !PirateLogic.Instance.IsRaiding ) {
-				return;
-			}
-
 			switch( npc.type ) {
 			case NPCID.PirateCorsair:
 			case NPCID.PirateCrossbower:
@@ -36,13 +31,24 @@ namespace PiratesDemandYourBooty {
 			case NPCID.PirateDeckhand:
 			case NPCID.Parrot:
 			case NPCID.PirateCaptain:
-				this.IsRaider = true;
-				npc.lifeMax /= 2;
-				npc.life /= 2;
-				npc.defense /= 2;
-				npc.damage /= 2;
+				this.SetPirateRaider( npc );
 				break;
 			}
+		}
+
+		////////////////
+
+		public void SetPirateRaider( NPC npc ) {
+			if( Main.hardMode || !PirateLogic.Instance.IsRaiding ) {
+				return;
+			}
+
+			this.IsRaider = true;
+
+			npc.lifeMax /= 2;
+			npc.life /= 2;
+			npc.defense /= 2;
+			npc.damage /= 2;
 		}
 
 
@@ -74,6 +80,7 @@ namespace PiratesDemandYourBooty {
 			pool[ NPCID.PirateDeckhand ] = average * 3f;
 			pool[ NPCID.Parrot ] = average * 3f;
 			pool[ NPCID.PirateCaptain ] = average / 9f;
+			pool[ NPCType<PirateRuffianNPC>() ] = average * 3f; // handle in PirateRuffianNPC.SpawnChance?
 		}
 
 
@@ -116,7 +123,7 @@ namespace PiratesDemandYourBooty {
 
 
 		////////////////
-
+		
 		private int OldInvasion;
 
 		public override bool PreAI( NPC npc ) {
