@@ -100,13 +100,11 @@ namespace PiratesDemandYourBooty.UI {
 			inputElem.SetTextDirect( "0" );
 			inputElem.TextColor = color;
 			inputElem.OnPreTextChange += strBuild => {
-Main.NewText("1! "+inputElem.GetHashCode());
 				string str = strBuild.ToString();
 				if( str == "" ) { return true; }
 				return this.ProcessCoinInput( str, valueFunc, out string _ );
 			};
 			inputElem.OnUnfocus += () => {
-Main.NewText("2! "+inputElem.GetHashCode());
 				if( !this.ProcessCoinInput(inputElem.Text, valueFunc, out string output) ) {
 					inputElem.SetTextDirect( output );
 				}

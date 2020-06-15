@@ -121,7 +121,7 @@ namespace PiratesDemandYourBooty.NPCs {
 		////////////////
 
 		private void BeginAmbushAction( Entity target ) {
-			this.AmbushRunTimer = 60 * 5;
+			this.AmbushRunTimer = 90;
 			PirateRuffianNPC.EmitSmoke( this.npc.Center, false );
 		}
 
